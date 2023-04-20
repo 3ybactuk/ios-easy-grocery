@@ -7,15 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		492467AE29F1DE6700BE40CC /* ButtonImageTopOfTextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492467AD29F1DE6700BE40CC /* ButtonImageTopOfTextExtension.swift */; };
 		49C3376329F149B800A6C681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3376229F149B800A6C681 /* AppDelegate.swift */; };
 		49C3376529F149B800A6C681 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3376429F149B800A6C681 /* SceneDelegate.swift */; };
 		49C3376729F149B800A6C681 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3376629F149B800A6C681 /* ViewController.swift */; };
 		49C3376A29F149B800A6C681 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49C3376829F149B800A6C681 /* Main.storyboard */; };
 		49C3376C29F149BB00A6C681 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49C3376B29F149BB00A6C681 /* Assets.xcassets */; };
 		49C3376F29F149BB00A6C681 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49C3376D29F149BB00A6C681 /* LaunchScreen.storyboard */; };
+		49C3377929F149FB00A6C681 /* PinLib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3377829F149FB00A6C681 /* PinLib.swift */; };
+		49C3377D29F14A2300A6C681 /* LayerShadowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3377C29F14A2300A6C681 /* LayerShadowExtension.swift */; };
+		49C3378129F14A5D00A6C681 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3378029F14A5D00A6C681 /* LoginView.swift */; };
+		49C3378429F194D200A6C681 /* ButtonAnimationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3378329F194D200A6C681 /* ButtonAnimationExtension.swift */; };
+		49C3378729F1951F00A6C681 /* TextFieldIndentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3378629F1951F00A6C681 /* TextFieldIndentExtension.swift */; };
+		49C3378C29F1AA2500A6C681 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3378B29F1AA2400A6C681 /* PreferencesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		492467AD29F1DE6700BE40CC /* ButtonImageTopOfTextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonImageTopOfTextExtension.swift; sourceTree = "<group>"; };
 		49C3375F29F149B800A6C681 /* Easy Grocery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Easy Grocery.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49C3376229F149B800A6C681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49C3376429F149B800A6C681 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +32,12 @@
 		49C3376B29F149BB00A6C681 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49C3376E29F149BB00A6C681 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49C3377029F149BB00A6C681 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49C3377829F149FB00A6C681 /* PinLib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinLib.swift; sourceTree = "<group>"; };
+		49C3377C29F14A2300A6C681 /* LayerShadowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerShadowExtension.swift; sourceTree = "<group>"; };
+		49C3378029F14A5D00A6C681 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		49C3378329F194D200A6C681 /* ButtonAnimationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAnimationExtension.swift; sourceTree = "<group>"; };
+		49C3378629F1951F00A6C681 /* TextFieldIndentExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldIndentExtension.swift; sourceTree = "<group>"; };
+		49C3378B29F1AA2400A6C681 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +70,9 @@
 		49C3376129F149B800A6C681 /* Easy Grocery */ = {
 			isa = PBXGroup;
 			children = (
+				49C3378E29F1C91E00A6C681 /* PreferencesViewController */,
+				49C3377F29F14A4C00A6C681 /* LoginView */,
+				49C3377729F149F100A6C681 /* Libs */,
 				49C3376229F149B800A6C681 /* AppDelegate.swift */,
 				49C3376429F149B800A6C681 /* SceneDelegate.swift */,
 				49C3376629F149B800A6C681 /* ViewController.swift */,
@@ -65,6 +82,34 @@
 				49C3377029F149BB00A6C681 /* Info.plist */,
 			);
 			path = "Easy Grocery";
+			sourceTree = "<group>";
+		};
+		49C3377729F149F100A6C681 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				49C3377829F149FB00A6C681 /* PinLib.swift */,
+				49C3377C29F14A2300A6C681 /* LayerShadowExtension.swift */,
+				49C3378329F194D200A6C681 /* ButtonAnimationExtension.swift */,
+				49C3378629F1951F00A6C681 /* TextFieldIndentExtension.swift */,
+				492467AD29F1DE6700BE40CC /* ButtonImageTopOfTextExtension.swift */,
+			);
+			path = Libs;
+			sourceTree = "<group>";
+		};
+		49C3377F29F14A4C00A6C681 /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				49C3378029F14A5D00A6C681 /* LoginView.swift */,
+			);
+			path = LoginView;
+			sourceTree = "<group>";
+		};
+		49C3378E29F1C91E00A6C681 /* PreferencesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				49C3378B29F1AA2400A6C681 /* PreferencesViewController.swift */,
+			);
+			path = PreferencesViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +182,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49C3378429F194D200A6C681 /* ButtonAnimationExtension.swift in Sources */,
+				49C3378729F1951F00A6C681 /* TextFieldIndentExtension.swift in Sources */,
+				49C3378C29F1AA2500A6C681 /* PreferencesViewController.swift in Sources */,
+				49C3378129F14A5D00A6C681 /* LoginView.swift in Sources */,
 				49C3376729F149B800A6C681 /* ViewController.swift in Sources */,
+				49C3377929F149FB00A6C681 /* PinLib.swift in Sources */,
+				49C3377D29F14A2300A6C681 /* LayerShadowExtension.swift in Sources */,
+				492467AE29F1DE6700BE40CC /* ButtonImageTopOfTextExtension.swift in Sources */,
 				49C3376329F149B800A6C681 /* AppDelegate.swift in Sources */,
 				49C3376529F149B800A6C681 /* SceneDelegate.swift in Sources */,
 			);
