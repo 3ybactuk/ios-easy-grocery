@@ -8,6 +8,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isToolbarHidden = true
         view.backgroundColor = .systemGray6
         self.loginView.viewControllerDelegate = self
         
@@ -17,11 +18,11 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        navigationController?.isToolbarHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.isNavigationBarHidden = false
     }
     
     private func setupLoginViewSV() {
@@ -55,16 +56,8 @@ class ViewController: UIViewController {
         descLabel.pinCenterX(to: view)
         descLabel.setWidth(256)
     }
-    
-//    func loggedIn() {
-////        loginView.isHidden = true
-////        nameLabel.isHidden = true
-////        descLabel.isHidden = true
-//        let preferencesViewController = PreferencesViewController()
-////        navigationController?.isNavigationBarHidden = false
-//        navigationController?.pushViewController(preferencesViewController, animated: true)
-//    }
 }
+
 
 protocol ViewControllerDelegate {
     func loggedIn()

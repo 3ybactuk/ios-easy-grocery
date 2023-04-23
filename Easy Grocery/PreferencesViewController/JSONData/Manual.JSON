@@ -1,0 +1,100 @@
+[
+  {
+    "title": "молочная продукция",
+    "description": "",
+    "excludes": [
+      "продукция с содержанием молочного сахара"
+    ]
+  },
+  {
+    "title": "арахис",
+    "description": "",
+    "excludes": [
+      "арахис"
+    ]
+  },
+  {
+    "title": "яйца",
+    "description": "",
+    "excludes": [
+      "яйца"
+    ]
+  },
+  {
+    "title": "орехи",
+    "description": "",
+    "excludes": [
+      "орехи"
+    ]
+  },
+  {
+    "title": "соя",
+    "description": "",
+    "excludes": [
+      "соя"
+    ]
+  },
+  {
+    "title": "пшеница",
+    "description": "",
+    "excludes": [
+      "пшеница"
+    ]
+  },
+  {
+    "title": "рис",
+    "description": "",
+    "excludes": [
+      "рис"
+    ]
+  },
+  {
+    "title": "фрукты",
+    "description": "",
+    "excludes": [
+      "фрукты"
+    ]
+  },
+  {
+    "title": "ягоды",
+    "description": "",
+    "excludes": [
+      "ягоды"
+    ]
+  },
+  {
+    "title": "овощи",
+    "description": "",
+    "excludes": [
+      "овощи"
+    ]
+  },
+  {
+    "title": "мёд",
+    "description": "",
+    "excludes": [
+      "мёд", "мед"
+    ]
+  },
+  {
+    "title": "морепродукты",
+    "description": "",
+    "excludes": [
+      "морепродукты"
+    ]
+  },
+  {
+    "title": "рыба",
+    "description": "",
+    "excludes": [
+      "рыба"
+    ]
+  },
+  {
+    "title": "мясо",
+    "description": "",
+    "excludes": [
+      "мясо"
+    ]
+  }
+]
