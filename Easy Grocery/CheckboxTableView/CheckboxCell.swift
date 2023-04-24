@@ -1,6 +1,6 @@
 import UIKit
 
-struct CheckboxCell: Equatable, Codable {
+struct CheckboxCell: Equatable, Codable, Hashable {
     var title: String
     var description = String("")
     var excludes: [String] = []

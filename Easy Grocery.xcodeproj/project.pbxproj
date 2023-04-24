@@ -16,6 +16,8 @@
 		492467CA29F3F28500BE40CC /* CheckboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492467C929F3F28500BE40CC /* CheckboxCell.swift */; };
 		492467CF29F5130000BE40CC /* Presets.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 492467CE29F5130000BE40CC /* Presets.JSON */; };
 		492467D329F513A200BE40CC /* Manual.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 492467D229F513A200BE40CC /* Manual.JSON */; };
+		492467D729F5C01400BE40CC /* UserPreferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 492467D629F5C01400BE40CC /* UserPreferences.plist */; };
+		492467DA29F7029A00BE40CC /* FileParsingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492467D929F7029A00BE40CC /* FileParsingHelper.swift */; };
 		49C3376329F149B800A6C681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3376229F149B800A6C681 /* AppDelegate.swift */; };
 		49C3376529F149B800A6C681 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3376429F149B800A6C681 /* SceneDelegate.swift */; };
 		49C3376729F149B800A6C681 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3376629F149B800A6C681 /* ViewController.swift */; };
@@ -40,6 +42,8 @@
 		492467C929F3F28500BE40CC /* CheckboxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxCell.swift; sourceTree = "<group>"; };
 		492467CE29F5130000BE40CC /* Presets.JSON */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Presets.JSON; sourceTree = "<group>"; };
 		492467D229F513A200BE40CC /* Manual.JSON */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Manual.JSON; path = "Easy Grocery/PreferencesViewController/JSONData/Manual.JSON"; sourceTree = SOURCE_ROOT; };
+		492467D629F5C01400BE40CC /* UserPreferences.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = UserPreferences.plist; sourceTree = "<group>"; };
+		492467D929F7029A00BE40CC /* FileParsingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileParsingHelper.swift; sourceTree = "<group>"; };
 		49C3375F29F149B800A6C681 /* Easy Grocery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Easy Grocery.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49C3376229F149B800A6C681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49C3376429F149B800A6C681 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 				49C3376B29F149BB00A6C681 /* Assets.xcassets */,
 				49C3376D29F149BB00A6C681 /* LaunchScreen.storyboard */,
 				49C3377029F149BB00A6C681 /* Info.plist */,
+				492467D629F5C01400BE40CC /* UserPreferences.plist */,
 			);
 			path = "Easy Grocery";
 			sourceTree = "<group>";
@@ -129,6 +134,7 @@
 				49C3378329F194D200A6C681 /* ButtonAnimationExtension.swift */,
 				49C3378629F1951F00A6C681 /* TextFieldIndentExtension.swift */,
 				492467AD29F1DE6700BE40CC /* ButtonExtensions.swift */,
+				492467D929F7029A00BE40CC /* FileParsingHelper.swift */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -213,6 +219,7 @@
 				49C3376C29F149BB00A6C681 /* Assets.xcassets in Resources */,
 				492467CF29F5130000BE40CC /* Presets.JSON in Resources */,
 				492467D329F513A200BE40CC /* Manual.JSON in Resources */,
+				492467D729F5C01400BE40CC /* UserPreferences.plist in Resources */,
 				49C3376A29F149B800A6C681 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -231,6 +238,7 @@
 				492467CA29F3F28500BE40CC /* CheckboxCell.swift in Sources */,
 				49C3376729F149B800A6C681 /* ViewController.swift in Sources */,
 				49C3377929F149FB00A6C681 /* PinLib.swift in Sources */,
+				492467DA29F7029A00BE40CC /* FileParsingHelper.swift in Sources */,
 				492467B729F2C15200BE40CC /* PresetsCell.swift in Sources */,
 				49C3377D29F14A2300A6C681 /* LayerShadowExtension.swift in Sources */,
 				492467C329F3F21700BE40CC /* CheckboxButton.swift in Sources */,

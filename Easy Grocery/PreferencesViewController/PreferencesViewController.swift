@@ -5,6 +5,10 @@ final class PreferencesViewController: UIViewController {
     private var titleLabel = UILabel()
     private var descriptionLabel = UILabel()
     
+    private var excludeSet = Set<String>()
+    
+    let cellAddField =  UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 40))
+    
     var presetsButton = UIBarButtonItem()
     var manualButton = UIBarButtonItem()
     
@@ -14,18 +18,28 @@ final class PreferencesViewController: UIViewController {
     let presetsTableVC = CheckboxTableViewController()
     let manualTableVC = CheckboxTableViewController()
     
-//    let presetsListView = PresetsListView()
+    var currentView = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
         setupUI()
+        
+        presetsTableVC.configure(FileParsingHelper.parseJSONFile(filename: "Presets") ?? [])
+        
+        manualTableVC.configure(FileParsingHelper.parseJSONFile(filename: "Manual") ?? [])
+        
         presetsPressed()
     }
     
+    // MARK:- Setup
     private func setupUI() {
         view.backgroundColor = .systemBackground
+        setupField(cellAddField)
+        view.addSubview(cellAddField)
+        manualTableVC.tableView.tableHeaderView = cellAddField
+        
         setupNavbar()
         setupToolbar()
     }
@@ -60,7 +74,6 @@ final class PreferencesViewController: UIViewController {
         presetsButton = UIBarButtonItem(customView: presetsUIButton)
         manualButton = UIBarButtonItem(customView: manualUIButton)
         
-        
         self.toolbarItems = [flexibleSpace, presetsButton, flexibleSpace, manualButton, flexibleSpace]
     }
     
@@ -83,19 +96,104 @@ final class PreferencesViewController: UIViewController {
         navigationItem.leftBarButtonItem?.tintColor = .label
     }
     
+    private func setupField(_ field: UITextField) {
+        field.placeholder = "Добавить исключение..."
+        field.backgroundColor = .white
+        field.font = UIFont.systemFont(ofSize: 15)
+        
+        field.autocorrectionType = UITextAutocorrectionType.no
+        field.keyboardType = UIKeyboardType.default
+        field.returnKeyType = UIReturnKeyType.done
+        field.clearButtonMode = UITextField.ViewMode.whileEditing
+        field.textAlignment = .left
+        field.setLeftPaddingPoints(10)
+        field.setRightPaddingPoints(10)
+//            field.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        field.delegate = self
+        field.layer.cornerRadius = 8
+//            field.layer.applyShadow(2.0)
+        field.setHeight(48)
+    }
+    
+    // MARK:- Update actions
+    
+    private func addExcludedItem() {
+        if let text = cellAddField.text {
+            self.excludeSet.formUnion([text])
+            let tempCell = CheckboxCell(title: text, excludes: [text])
+            if !manualTableVC.items.contains(tempCell) {
+                manualTableVC.items.append(tempCell)
+                manualTableVC.selectedItems.append(tempCell)
+                manualTableVC.tableView.beginUpdates()
+                manualTableVC.tableView.insertRows(at: [IndexPath(row: manualTableVC.items.count-1, section: 0)], with: .automatic)
+                manualTableVC.tableView.endUpdates()
+            }
+        }
+        
+    }
+    
+    private func presetsUpdated() {
+        for cell in presetsTableVC.selectedItems {
+            self.excludeSet.formUnion(cell.excludes)
+            for item in cell.excludes {
+                let tempCell = CheckboxCell(title: item, description: "", excludes: [item])
+                if !manualTableVC.items.contains(tempCell) {
+                    manualTableVC.items.append(tempCell)
+                }
+                if !manualTableVC.selectedItems.contains(tempCell) {
+                    manualTableVC.selectedItems.append(tempCell)
+                }
+            }
+        }
+        debugCellSet(presetsTableVC.selectedItems)
+        debugCellSet(manualTableVC.selectedItems)
+    }
+    
+    private func manualUpdated() {
+        var tempSet = Set<String>()
+        for cell in manualTableVC.selectedItems {
+            tempSet.formUnion(cell.excludes)
+        }
+        self.excludeSet = tempSet
+        
+        let tempSelected = presetsTableVC.selectedItems
+        for cell in tempSelected {
+            for item in cell.excludes {
+                if !self.excludeSet.contains(item) {
+                    presetsTableVC.selectedItems.removeAll { $0 == cell }
+                    break
+                }
+            }
+        }
+        
+        debugCellSet(presetsTableVC.selectedItems)
+        debugCellSet(manualTableVC.selectedItems)
+    }
+    
+    private func debugCellSet(_ items: [CheckboxCell]) {
+        print(items.count)
+        for item in items {
+            print(item.title, terminator: ", ")
+        }
+        print()
+    }
+    
+    // MARK:- objc Button actions
+    
     @objc
     private func presetsPressed() {
+        currentView = 0
         print("Presets pressed")
         manualUIButton.setColor(.systemGray2)
         presetsUIButton.setColor(.systemBlue)
         updateToolBar()
-        
-        let items: [CheckboxCell] = parseJSONFile(filename: "Presets") ?? []
-        
-        presetsTableVC.configure(items)
+        manualUpdated()
+        manualTableVC.dismiss(animated: false)
         
         addChild(presetsTableVC)
         view.addSubview(presetsTableVC.view)
+        
+        presetsTableVC.updateTableViewSelection()
         
         presetsTableVC.view.translatesAutoresizingMaskIntoConstraints = false
         presetsTableVC.view.pin(to: view, [.top, .bottom, .left, .right])
@@ -105,47 +203,30 @@ final class PreferencesViewController: UIViewController {
     
     @objc
     private func manualPressed() {
+        currentView = 1
         print("Manual pressed")
-        
         presetsUIButton.setColor(.systemGray2)
         manualUIButton.setColor(.systemBlue)
-
         updateToolBar()
+        presetsUpdated()
+        presetsTableVC.dismiss(animated: false)
         
-        let items: [CheckboxCell] = parseJSONFile(filename: "Manual") ?? []
-        
-        manualTableVC.configure(items, checkboxActiveType: "indeterminate_check_box")
-        
+//        setupField(cellAddField)
+//        view.addSubview(cellAddField)
+
         addChild(manualTableVC)
         view.addSubview(manualTableVC.view)
-        
+
+        manualTableVC.updateTableViewSelection()
+
         manualTableVC.view.translatesAutoresizingMaskIntoConstraints = false
-        manualTableVC.view.pin(to: view, [.top, .bottom, .left, .right])
+        manualTableVC.view.pinTop(to: view, 6)
+        manualTableVC.view.pin(to: view, [.bottom, .left, .right])
+
+//        manualTableVC.tableView.tableHeaderView = cellAddField
 
         manualTableVC.didMove(toParent: self)
     }
-    
-    private func parseJSONFile(filename: String) -> [CheckboxCell]? {
-        // Get the path to the JSON file
-        guard let path = Bundle.main.path(forResource: filename, ofType: "JSON") else {
-            return nil
-        }
-        
-        do {
-            // Read the contents of the file
-            let data = try Data(contentsOf: URL(fileURLWithPath: path))
-            
-            // Decode the JSON data into an array of CheckboxCell objects
-            let decoder = JSONDecoder()
-            let cells = try decoder.decode([CheckboxCell].self, from: data)
-            
-            return cells
-        } catch {
-            print("Error decoding JSON file: \(error)")
-            return nil
-        }
-    }
-
     
     @objc
     private func goBackPressed() {
@@ -154,6 +235,66 @@ final class PreferencesViewController: UIViewController {
     
     @objc
     private func donePressed() {
+        if currentView == 0 {
+            presetsUpdated()
+        } else if currentView == 1 {
+            manualUpdated()
+        }
         
+        FileParsingHelper.setExcludePreferences(Array(self.excludeSet))
     }
+}
+
+
+// MARK:- UITextFieldDelegate
+extension PreferencesViewController: UITextFieldDelegate {
+
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // return NO to disallow editing.
+        print("TextField should begin editing method called")
+        return true
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // became first responder
+        print("TextField did begin editing method called")
+    }
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
+        print("TextField should snd editing method called")
+        return true
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
+        print("TextField did end editing method called")
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        // if implemented, called in place of textFieldDidEndEditing:
+        print("TextField did end editing with reason method called")
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // return NO to not change text
+        print("While entering the characters this method gets called")
+        return true
+    }
+
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        // called when clear button pressed. return NO to ignore (no notifications)
+        print("TextField should clear method called")
+        return true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // called when 'return' key pressed. return NO to ignore.
+        print("TextField should return method called")
+        addExcludedItem()
+        cellAddField.text = ""
+        // may be useful: textField.resignFirstResponder()
+        return true
+    }
+
 }
