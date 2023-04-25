@@ -18,6 +18,8 @@ final class PreferencesViewController: UIViewController {
     let presetsTableVC = CheckboxTableViewController()
     let manualTableVC = CheckboxTableViewController()
     
+    var viewControllerDelegate: ViewControllerDelegate?
+    
     var currentView = 0
     
     override func viewDidLoad() {
@@ -93,7 +95,6 @@ final class PreferencesViewController: UIViewController {
             target: self,
             action: #selector(donePressed)
         )
-        navigationItem.leftBarButtonItem?.tintColor = .label
     }
     
     private func setupField(_ field: UITextField) {
@@ -240,8 +241,9 @@ final class PreferencesViewController: UIViewController {
         } else if currentView == 1 {
             manualUpdated()
         }
-        
+
         FileParsingHelper.setExcludePreferences(Array(self.excludeSet))
+        viewControllerDelegate?.switchToSearch()
     }
 }
 

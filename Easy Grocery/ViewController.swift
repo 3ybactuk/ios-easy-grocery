@@ -61,15 +61,23 @@ class ViewController: UIViewController {
 
 protocol ViewControllerDelegate {
     func loggedIn()
+    func switchToSearch()
 }
 
 extension ViewController: ViewControllerDelegate {
     func loggedIn() {
         print("Logged in invoked")
         let preferencesViewController = PreferencesViewController()
+        preferencesViewController.viewControllerDelegate = self
 //        self.present(preferencesViewController, animated: true, completion: nil)
 //        navigationController?.isNavigationBarHidden = false
         navigationController?.pushViewController(preferencesViewController, animated: true)
+    }
+    
+    func switchToSearch() {
+        print("Search invoked")
+        let searchViewController = SearchPageViewController()
+        navigationController?.pushViewController(searchViewController, animated: true)
     }
 }
 
