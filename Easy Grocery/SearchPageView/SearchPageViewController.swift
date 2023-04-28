@@ -14,6 +14,7 @@ final class SearchPageViewController: UIViewController {
     var currentView = 0
     
     let settingsViewController = SettingsViewController()
+    let productTableViewController = ProductTableViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,11 +43,11 @@ final class SearchPageViewController: UIViewController {
     
     private func setupToolbar() {
         cameraUIButton.setImage(UIImage(systemName: "camera.fill"), for: .normal)
-        cameraUIButton.setTitle("Сканер", for: .normal)
+        cameraUIButton.setTitle("   Сканер", for: .normal)
         cameraUIButton.addTarget(self, action: #selector(cameraPressed), for: .touchUpInside)
         
         searchUIButton.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        searchUIButton.setTitle("Поиск", for: .normal)
+        searchUIButton.setTitle("   Поиск", for: .normal)
         searchUIButton.addTarget(self, action: #selector(searchPressed), for: .touchUpInside)
         
         settingsUIButton.setImage(UIImage(systemName: "gear"), for: .normal)
@@ -113,6 +114,11 @@ final class SearchPageViewController: UIViewController {
         print("Search pressed")
         chooseButton(searchUIButton)
         updateToolBar()
+        
+        addChild(productTableViewController)
+        view.addSubview(productTableViewController.view)
+        
+        productTableViewController.view.pin(to: view, [.top, .bottom, .left, .right])
         
 //        manualTableVC.dismiss(animated: false)
         

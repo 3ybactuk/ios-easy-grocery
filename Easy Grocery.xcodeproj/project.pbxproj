@@ -18,9 +18,14 @@
 		492467DA29F7029A00BE40CC /* FileParsingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492467D929F7029A00BE40CC /* FileParsingHelper.swift */; };
 		492467E029F7AAB800BE40CC /* SearchPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492467DF29F7AAB800BE40CC /* SearchPageViewController.swift */; };
 		492467E629F7BF1800BE40CC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492467E529F7BF1700BE40CC /* SettingsViewController.swift */; };
+		499BF54729FBA2C600E55A33 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499BF54629FBA2C600E55A33 /* ProductCell.swift */; };
+		49BE8D5A29FABFFD00B44498 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE8D5929FABFFD00B44498 /* ProductViewModel.swift */; };
+		49BE8D6029FAD5E300B44498 /* ProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE8D5F29FAD5E300B44498 /* ProductTableViewController.swift */; };
+		49BE8D6C29FAD7BB00B44498 /* vprok_base_small.csv in Resources */ = {isa = PBXBuildFile; fileRef = 49BE8D6A29FAD7BA00B44498 /* vprok_base_small.csv */; };
+		49BE8D6D29FAD7BB00B44498 /* vprok_base.csv in Resources */ = {isa = PBXBuildFile; fileRef = 49BE8D6B29FAD7BB00B44498 /* vprok_base.csv */; };
 		49C3376329F149B800A6C681 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3376229F149B800A6C681 /* AppDelegate.swift */; };
 		49C3376529F149B800A6C681 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3376429F149B800A6C681 /* SceneDelegate.swift */; };
-		49C3376729F149B800A6C681 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3376629F149B800A6C681 /* ViewController.swift */; };
+		49C3376729F149B800A6C681 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3376629F149B800A6C681 /* LoginViewController.swift */; };
 		49C3376A29F149B800A6C681 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49C3376829F149B800A6C681 /* Main.storyboard */; };
 		49C3376C29F149BB00A6C681 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49C3376B29F149BB00A6C681 /* Assets.xcassets */; };
 		49C3376F29F149BB00A6C681 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49C3376D29F149BB00A6C681 /* LaunchScreen.storyboard */; };
@@ -44,10 +49,15 @@
 		492467D929F7029A00BE40CC /* FileParsingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileParsingHelper.swift; sourceTree = "<group>"; };
 		492467DF29F7AAB800BE40CC /* SearchPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageViewController.swift; sourceTree = "<group>"; };
 		492467E529F7BF1700BE40CC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		499BF54629FBA2C600E55A33 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
+		49BE8D5929FABFFD00B44498 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
+		49BE8D5F29FAD5E300B44498 /* ProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewController.swift; sourceTree = "<group>"; };
+		49BE8D6A29FAD7BA00B44498 /* vprok_base_small.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vprok_base_small.csv; sourceTree = "<group>"; };
+		49BE8D6B29FAD7BB00B44498 /* vprok_base.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vprok_base.csv; sourceTree = "<group>"; };
 		49C3375F29F149B800A6C681 /* Easy Grocery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Easy Grocery.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49C3376229F149B800A6C681 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49C3376429F149B800A6C681 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		49C3376629F149B800A6C681 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		49C3376629F149B800A6C681 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		49C3376929F149B800A6C681 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		49C3376B29F149BB00A6C681 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49C3376E29F149BB00A6C681 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -94,10 +104,30 @@
 		492467DE29F7AA7500BE40CC /* SearchPageView */ = {
 			isa = PBXGroup;
 			children = (
+				49BE8D5D29FAD4FE00B44498 /* ProductTableView */,
 				492467DF29F7AAB800BE40CC /* SearchPageViewController.swift */,
 				492467E529F7BF1700BE40CC /* SettingsViewController.swift */,
 			);
 			path = SearchPageView;
+			sourceTree = "<group>";
+		};
+		49BE8D5C29FAD2BF00B44498 /* VprokData */ = {
+			isa = PBXGroup;
+			children = (
+				49BE8D6A29FAD7BA00B44498 /* vprok_base_small.csv */,
+				49BE8D6B29FAD7BB00B44498 /* vprok_base.csv */,
+			);
+			path = VprokData;
+			sourceTree = "<group>";
+		};
+		49BE8D5D29FAD4FE00B44498 /* ProductTableView */ = {
+			isa = PBXGroup;
+			children = (
+				49BE8D5929FABFFD00B44498 /* ProductViewModel.swift */,
+				49BE8D5F29FAD5E300B44498 /* ProductTableViewController.swift */,
+				499BF54629FBA2C600E55A33 /* ProductCell.swift */,
+			);
+			path = ProductTableView;
 			sourceTree = "<group>";
 		};
 		49C3375629F149B800A6C681 = {
@@ -119,6 +149,7 @@
 		49C3376129F149B800A6C681 /* Easy Grocery */ = {
 			isa = PBXGroup;
 			children = (
+				49BE8D5C29FAD2BF00B44498 /* VprokData */,
 				492467DE29F7AA7500BE40CC /* SearchPageView */,
 				492467C129F3F1FB00BE40CC /* CheckboxTableView */,
 				49C3378E29F1C91E00A6C681 /* PreferencesViewController */,
@@ -126,7 +157,7 @@
 				49C3377729F149F100A6C681 /* Libs */,
 				49C3376229F149B800A6C681 /* AppDelegate.swift */,
 				49C3376429F149B800A6C681 /* SceneDelegate.swift */,
-				49C3376629F149B800A6C681 /* ViewController.swift */,
+				49C3376629F149B800A6C681 /* LoginViewController.swift */,
 				49C3376829F149B800A6C681 /* Main.storyboard */,
 				49C3376B29F149BB00A6C681 /* Assets.xcassets */,
 				49C3376D29F149BB00A6C681 /* LaunchScreen.storyboard */,
@@ -226,6 +257,8 @@
 				49C3376F29F149BB00A6C681 /* LaunchScreen.storyboard in Resources */,
 				49C3376C29F149BB00A6C681 /* Assets.xcassets in Resources */,
 				492467CF29F5130000BE40CC /* Presets.JSON in Resources */,
+				49BE8D6C29FAD7BB00B44498 /* vprok_base_small.csv in Resources */,
+				49BE8D6D29FAD7BB00B44498 /* vprok_base.csv in Resources */,
 				492467D329F513A200BE40CC /* Manual.JSON in Resources */,
 				492467D729F5C01400BE40CC /* UserPreferences.plist in Resources */,
 				49C3376A29F149B800A6C681 /* Main.storyboard in Resources */,
@@ -244,7 +277,7 @@
 				49C3378C29F1AA2500A6C681 /* PreferencesViewController.swift in Sources */,
 				49C3378129F14A5D00A6C681 /* LoginView.swift in Sources */,
 				492467CA29F3F28500BE40CC /* CheckboxCell.swift in Sources */,
-				49C3376729F149B800A6C681 /* ViewController.swift in Sources */,
+				49C3376729F149B800A6C681 /* LoginViewController.swift in Sources */,
 				49C3377929F149FB00A6C681 /* PinLib.swift in Sources */,
 				492467DA29F7029A00BE40CC /* FileParsingHelper.swift in Sources */,
 				49C3377D29F14A2300A6C681 /* LayerShadowExtension.swift in Sources */,
@@ -254,7 +287,10 @@
 				492467E629F7BF1800BE40CC /* SettingsViewController.swift in Sources */,
 				492467C729F3F23C00BE40CC /* CheckboxTableViewCell.swift in Sources */,
 				492467AE29F1DE6700BE40CC /* ButtonExtensions.swift in Sources */,
+				49BE8D5A29FABFFD00B44498 /* ProductViewModel.swift in Sources */,
 				49C3376329F149B800A6C681 /* AppDelegate.swift in Sources */,
+				499BF54729FBA2C600E55A33 /* ProductCell.swift in Sources */,
+				49BE8D6029FAD5E300B44498 /* ProductTableViewController.swift in Sources */,
 				49C3376529F149B800A6C681 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

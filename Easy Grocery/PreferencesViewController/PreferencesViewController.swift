@@ -1,10 +1,6 @@
 import UIKit
 
 final class PreferencesViewController: UIViewController {
-    private var imageView = UIImageView()
-    private var titleLabel = UILabel()
-    private var descriptionLabel = UILabel()
-    
     private var excludeSet = Set<String>()
     
     let cellAddField =  UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 40))
@@ -243,7 +239,15 @@ final class PreferencesViewController: UIViewController {
         }
 
         FileParsingHelper.setExcludePreferences(Array(self.excludeSet))
+        logIn()
         viewControllerDelegate?.switchToSearch()
+    }
+    
+    func logIn() {
+        let def = UserDefaults.standard
+        def.set(true, forKey: "is_authenticated") // save true flag to UserDefaults
+        def.synchronize()
+
     }
 }
 

@@ -18,7 +18,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        let navigationController = UINavigationController(rootViewController: ViewController())
+        
+        // Get the user defaults
+        let def = UserDefaults.standard
+        
+        // Start View Controller to display on launch
+        var startVC: UIViewController
+        
+        // Check if the user is authenticated
+        if def.bool(forKey: "is_authenticated") {
+            // If the user is authenticated, create and set the root view controller to a different view controller
+            startVC = SearchPageViewController()
+        } else {
+            // If the user is not authenticated, create and set the root view controller to the login view controller
+            startVC = LoginViewController()
+        }
+        
+        let navigationController = UINavigationController(rootViewController: startVC)
+        
+        
         window.rootViewController = navigationController
         self.window = window
         window.makeKeyAndVisible()

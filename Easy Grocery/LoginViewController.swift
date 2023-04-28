@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
     let loginView = LoginView()
     let nameLabel = UILabel()
     let descLabel = UILabel()
@@ -64,19 +64,21 @@ protocol ViewControllerDelegate {
     func switchToSearch()
 }
 
-extension ViewController: ViewControllerDelegate {
+extension LoginViewController: ViewControllerDelegate {
     func loggedIn() {
         print("Logged in invoked")
         let preferencesViewController = PreferencesViewController()
         preferencesViewController.viewControllerDelegate = self
 //        self.present(preferencesViewController, animated: true, completion: nil)
 //        navigationController?.isNavigationBarHidden = false
+//        navigationController?.popViewController(animated: false)
         navigationController?.pushViewController(preferencesViewController, animated: true)
     }
     
     func switchToSearch() {
         print("Search invoked")
         let searchViewController = SearchPageViewController()
+//        navigationController?.popViewController(animated: false)
         navigationController?.pushViewController(searchViewController, animated: true)
     }
 }
