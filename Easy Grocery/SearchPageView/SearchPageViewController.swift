@@ -14,12 +14,12 @@ final class SearchPageViewController: UIViewController {
     var currentView = 0
     
     let settingsViewController = SettingsViewController()
-    let productTableViewController = ProductTableViewController()
+    let productTableViewController = ProductCollectionViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = false
+        navigationController?.isToolbarHidden = true
         setupUI()
         
         searchPressed()
@@ -28,7 +28,7 @@ final class SearchPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = false
+        navigationController?.isToolbarHidden = true
         setupUI()
         searchPressed()
     }
@@ -38,7 +38,7 @@ final class SearchPageViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         setupNavbar()
-        setupToolbar()
+//        setupToolbar()
     }
     
     private func setupToolbar() {
@@ -84,11 +84,12 @@ final class SearchPageViewController: UIViewController {
         navigationItem.title = "Поиск"
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: nil,
+            image: UIImage(systemName: "camera.fill"),
             style: .plain,
             target: self,
-            action: nil //#selector(goBackPressed)
+            action: #selector(cameraPressed) //#selector(goBackPressed)
         )
+        navigationItem.leftBarButtonItem?.tintColor = .label
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "line.horizontal.3"),
@@ -113,7 +114,7 @@ final class SearchPageViewController: UIViewController {
         currentView = 1
         print("Search pressed")
         chooseButton(searchUIButton)
-        updateToolBar()
+//        updateToolBar()
         
         addChild(productTableViewController)
         view.addSubview(productTableViewController.view)
@@ -126,7 +127,10 @@ final class SearchPageViewController: UIViewController {
         currentView = 0
         print("Camera pressed")
         chooseButton(cameraUIButton)
-        updateToolBar()
+        let barcodeScannerVC = BarcodeScannerViewController()
+        present(barcodeScannerVC, animated: true)
+
+//        updateToolBar()
     }
     
     @objc

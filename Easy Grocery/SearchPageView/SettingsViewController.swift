@@ -101,7 +101,7 @@ final class SettingsViewController: UITableViewController {
                 cell.accessoryType = .disclosureIndicator
                 cell.addGestureRecognizer(tapGesture)
             case 1:
-                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(notificationSettingsTapped))
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(preferenceSettingsTapped))
                 cell.textLabel?.text = "Настройки предпочтений"
                 cell.accessoryType = .disclosureIndicator
                 cell.addGestureRecognizer(tapGesture)
@@ -173,8 +173,14 @@ final class SettingsViewController: UITableViewController {
         
     }
     
-    @objc func notificationSettingsTapped() {
+    @objc func preferenceSettingsTapped() {
+        let preferencesViewController = PreferencesViewController()
+        preferencesViewController.viewControllerDelegate = self
         
+//        self.present(preferencesViewController, animated: true, completion: nil)
+//        navigationController?.isNavigationBarHidden = false
+//        navigationController?.popViewController(animated: false)
+        navigationController?.pushViewController(preferencesViewController, animated: true)
     }
     
     @objc func switchValueChanged(_ sender: UISwitch) {
@@ -187,5 +193,15 @@ final class SettingsViewController: UITableViewController {
         }
     }
 
+}
+
+extension SettingsViewController: PreferencesDelegate {
+    func loggedIn() {
+        
+    }
+    
+    func switchToSearch() {
+        navigationController?.popViewController(animated: true)
+    }
 }
 

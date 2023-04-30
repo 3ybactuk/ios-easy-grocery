@@ -13,7 +13,7 @@ final class LoginView: UIControl {
     let skipButton = UIButton()
     let forgotButton = UIButton()
 
-    var viewControllerDelegate: ViewControllerDelegate?
+    var viewControllerDelegate: PreferencesDelegate?
 
     
     init() {

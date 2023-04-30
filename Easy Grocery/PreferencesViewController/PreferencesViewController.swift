@@ -3,20 +3,21 @@ import UIKit
 final class PreferencesViewController: UIViewController {
     private var excludeSet = Set<String>()
     
-    let cellAddField =  UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 40))
+    private let cellAddField =  UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 40))
     
-    var presetsButton = UIBarButtonItem()
-    var manualButton = UIBarButtonItem()
+    private var presetsButton = UIBarButtonItem()
+    private var manualButton = UIBarButtonItem()
     
-    let presetsUIButton = UIButton()
-    let manualUIButton = UIButton()
+    private let presetsUIButton = UIButton()
+    private let manualUIButton = UIButton()
     
     let presetsTableVC = CheckboxTableViewController()
     let manualTableVC = CheckboxTableViewController()
     
-    var viewControllerDelegate: ViewControllerDelegate?
+    var viewControllerDelegate: PreferencesDelegate?
     
     var currentView = 0
+//    private var isLoggedIn = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,8 @@ final class PreferencesViewController: UIViewController {
         manualTableVC.configure(FileParsingHelper.parseJSONFile(filename: "Manual") ?? [])
         
         presetsPressed()
+        
+//        isLoggedIn = UserDefaults.standard.bool(forKey: "is_authenticated")
     }
     
     // MARK:- Setup
@@ -239,6 +242,8 @@ final class PreferencesViewController: UIViewController {
         }
 
         FileParsingHelper.setExcludePreferences(Array(self.excludeSet))
+        
+        
         logIn()
         viewControllerDelegate?.switchToSearch()
     }
@@ -247,10 +252,13 @@ final class PreferencesViewController: UIViewController {
         let def = UserDefaults.standard
         def.set(true, forKey: "is_authenticated") // save true flag to UserDefaults
         def.synchronize()
-
     }
 }
 
+protocol PreferencesDelegate {
+    func loggedIn()
+    func switchToSearch()
+}
 
 // MARK:- UITextFieldDelegate
 extension PreferencesViewController: UITextFieldDelegate {

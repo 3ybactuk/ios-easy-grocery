@@ -58,13 +58,7 @@ class LoginViewController: UIViewController {
     }
 }
 
-
-protocol ViewControllerDelegate {
-    func loggedIn()
-    func switchToSearch()
-}
-
-extension LoginViewController: ViewControllerDelegate {
+extension LoginViewController: PreferencesDelegate {
     func loggedIn() {
         print("Logged in invoked")
         let preferencesViewController = PreferencesViewController()
