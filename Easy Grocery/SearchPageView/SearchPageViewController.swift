@@ -119,18 +119,6 @@ final class SearchPageViewController: UIViewController {
         view.addSubview(productTableViewController.view)
         
         productTableViewController.view.pin(to: view, [.top, .bottom, .left, .right])
-        
-//        manualTableVC.dismiss(animated: false)
-        
-//        addChild(presetsTableVC)
-//        view.addSubview(presetsTableVC.view)
-        
-//        presetsTableVC.updateTableViewSelection()
-        
-//        presetsTableVC.view.translatesAutoresizingMaskIntoConstraints = false
-//        presetsTableVC.view.pin(to: view, [.top, .bottom, .left, .right])
-
-//        presetsTableVC.didMove(toParent: self)
     }
     
     @objc

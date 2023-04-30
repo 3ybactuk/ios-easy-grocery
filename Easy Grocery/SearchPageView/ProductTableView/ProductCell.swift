@@ -25,10 +25,16 @@ final class ProductCell: UITableViewCell {
     }
     
     private func setupView() {
-        setupImageView()
-        setupTitleLabel()
-        setupQuantityLabel()
+//        setupImageView()
+//        setupTitleLabel()
+//        setupQuantityLabel()
+//        setupPriceLabel()
+//        self.backgroundColor = .systemGray
+        self.layer.applyShadow()
         setupPriceLabel()
+        setupQuantityLabel()
+        setupTitleLabel()
+        setupImageView()
         setupProductCompatibleIcon()
         bringSubviewToFront(productCompatibleIcon)
     }
@@ -42,9 +48,13 @@ final class ProductCell: UITableViewCell {
         contentView.addSubview(productImageView)
         
         productImageView.translatesAutoresizingMaskIntoConstraints = false
-        productImageView.setHeight(200)
+//        productImageView.setHeight(200)
+        productImageView.pinWidth(to: productImageView.heightAnchor)
+        productImageView.pinBottom(to: productTitleLabel.topAnchor, 6)
+        productImageView.pin(to: contentView, [.left, .right, .top], 6)
+        
 //        productImageView.setWidth(32)
-        productImageView.pin(to: contentView, [.top, .left, .right], 4)
+//        productImageView.pin(to: contentView, [.top, .left, .right], 4)
 //        productImageView.pin(to: contentView, [.top, .left, .right], 4)
 //        productImageView.pinLeft(to: contentView, 16)
 //        productImageView.pinWidth(to: newsImageView.heightAnchor)
@@ -59,8 +69,13 @@ final class ProductCell: UITableViewCell {
         productTitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
         productTitleLabel.setHeight(Int(productTitleLabel.font.lineHeight))
-        productTitleLabel.pinTop(to: productImageView.bottomAnchor, 6)
+        
+        productTitleLabel.pinBottom(to: productQuantityLabel.topAnchor, 6)
         productTitleLabel.pin(to: contentView, [.left, .right], 6)
+        
+//        productTitleLabel.pinTop(to: productImageView.bottomAnchor, 6)
+//        productTitleLabel.pin(to: contentView, [.left, .right], 6)
+        
 //        productTitleLabel.pinLeft(to: productImageView.trailingAnchor, 12)
 //        productTitleLabel.pin(to: contentView, [.top, .right], 12)
     }
@@ -71,30 +86,35 @@ final class ProductCell: UITableViewCell {
         productQuantityLabel.numberOfLines = 1
         contentView.addSubview(productQuantityLabel)
         productQuantityLabel.setHeight(Int(productQuantityLabel.font.lineHeight))
-        productQuantityLabel.pinTop(to: productTitleLabel.bottomAnchor, 6)
+        productQuantityLabel.pinBottom(to: productPriceLabel.topAnchor, 6)
         productQuantityLabel.pin(to: contentView, [.left, .right], 6)
+//        productQuantityLabel.pinTop(to: productTitleLabel.bottomAnchor, 6)
+//        productQuantityLabel.pin(to: contentView, [.left, .right], 6)
     }
     
     private func setupPriceLabel() {
-        productPriceLabel.font = .systemFont(ofSize: 16, weight: .medium)
+        productPriceLabel.font = .systemFont(ofSize: 12, weight: .medium)
         productPriceLabel.textColor = .label
         productPriceLabel.numberOfLines = 1
         contentView.addSubview(productPriceLabel)
         productPriceLabel.setHeight(Int(productPriceLabel.font.lineHeight))
-        productPriceLabel.pinTop(to: productQuantityLabel.bottomAnchor, 10)
+        productPriceLabel.pinBottom(to: contentView)
         productPriceLabel.pin(to: contentView, [.left, .right], 6)
+//        productPriceLabel.pinTop(to: productQuantityLabel.bottomAnchor, 10)
+//        productPriceLabel.pin(to: contentView, [.left, .right], 6)
     }
     
     private func setupProductCompatibleIcon() {
         productCompatibleIcon.tintColor = .systemRed
         contentView.addSubview(productCompatibleIcon)
         productCompatibleIcon.setHeight(8)
+        productCompatibleIcon.setWidth(8)
         productCompatibleIcon.pin(to: contentView, [.right, .top], 6)
     }
     
     public func configure(_ viewModel: ProductViewModel) {
         productTitleLabel.text = viewModel.name
-        productPriceLabel.text = viewModel.price ?? "?"
+        productPriceLabel.text = viewModel.price ?? "? ₽"
         productQuantityLabel.text = viewModel.volume ?? viewModel.weight ?? ""
         
 //        if let url = viewModel.imageURL {

@@ -1,8 +1,10 @@
 import UIKit
 
-class ProductTableViewController: UIViewController {
+class ProductTableViewController: UIViewController, SkeletonDisplayable {
     private var tableView = UITableView(frame: .zero, style: .plain)
     private var productViewModels = [ProductViewModel]()
+    
+    private var isLoading = false
     
     public static let imageCache = NSCache<NSString, AnyObject>()
     
@@ -15,7 +17,11 @@ class ProductTableViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        if isLoading {
+            showSkeleton()
+        } else {
+            hideSkeleton()
+        }
     }
     
     private func setupUI() {
@@ -54,10 +60,21 @@ class ProductTableViewController: UIViewController {
     private func fetchProducts() {
         productViewModels = []
         
+//        self.productViewModels = FileParsingHelper.getProductsCSV()
+//        self.tableView.reloadData()
+        
+        self.isLoading = true
+        self.showSkeleton()
         self.productViewModels = FileParsingHelper.getProductsCSV()
-        self.tableView.reloadData()
-//        self.isLoading = true
-//        self.showSkeleton()
+        
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.isLoading = false
+            self.hideSkeleton()
+            self.tableView.reloadData()
+        }
+        
 //        nam.getArticles(source: .Polygon, key: key) { data in
 //            do {
 //                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
@@ -90,12 +107,20 @@ class ProductTableViewController: UIViewController {
 
 extension ProductTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isLoading {
+            return 5
+        }
         return productViewModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let viewModel = productViewModels[indexPath.row]
+        var viewModel = ProductViewModel(name: "        ", weight: "     ", price: "     ", imageURL: URL(string: ""), productURL: URL(string: ""))
+        
+        if !isLoading {
+            viewModel = productViewModels[indexPath.row]
+        }
+        
         if let productCell = tableView.dequeueReusableCell(withIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell {
             productCell.configure(viewModel)
             return productCell

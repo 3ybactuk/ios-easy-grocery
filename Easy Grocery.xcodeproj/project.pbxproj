@@ -19,6 +19,7 @@
 		492467E029F7AAB800BE40CC /* SearchPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492467DF29F7AAB800BE40CC /* SearchPageViewController.swift */; };
 		492467E629F7BF1800BE40CC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492467E529F7BF1700BE40CC /* SettingsViewController.swift */; };
 		499BF54729FBA2C600E55A33 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499BF54629FBA2C600E55A33 /* ProductCell.swift */; };
+		499BF54B29FD239B00E55A33 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499BF54A29FD239B00E55A33 /* SkeletonView.swift */; };
 		49BE8D5A29FABFFD00B44498 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE8D5929FABFFD00B44498 /* ProductViewModel.swift */; };
 		49BE8D6029FAD5E300B44498 /* ProductTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE8D5F29FAD5E300B44498 /* ProductTableViewController.swift */; };
 		49BE8D6C29FAD7BB00B44498 /* vprok_base_small.csv in Resources */ = {isa = PBXBuildFile; fileRef = 49BE8D6A29FAD7BA00B44498 /* vprok_base_small.csv */; };
@@ -50,6 +51,7 @@
 		492467DF29F7AAB800BE40CC /* SearchPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPageViewController.swift; sourceTree = "<group>"; };
 		492467E529F7BF1700BE40CC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		499BF54629FBA2C600E55A33 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
+		499BF54A29FD239B00E55A33 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
 		49BE8D5929FABFFD00B44498 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		49BE8D5F29FAD5E300B44498 /* ProductTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewController.swift; sourceTree = "<group>"; };
 		49BE8D6A29FAD7BA00B44498 /* vprok_base_small.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vprok_base_small.csv; sourceTree = "<group>"; };
@@ -111,6 +113,14 @@
 			path = SearchPageView;
 			sourceTree = "<group>";
 		};
+		499BF54929FD238800E55A33 /* SkeletonView */ = {
+			isa = PBXGroup;
+			children = (
+				499BF54A29FD239B00E55A33 /* SkeletonView.swift */,
+			);
+			path = SkeletonView;
+			sourceTree = "<group>";
+		};
 		49BE8D5C29FAD2BF00B44498 /* VprokData */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +159,7 @@
 		49C3376129F149B800A6C681 /* Easy Grocery */ = {
 			isa = PBXGroup;
 			children = (
+				499BF54929FD238800E55A33 /* SkeletonView */,
 				49BE8D5C29FAD2BF00B44498 /* VprokData */,
 				492467DE29F7AA7500BE40CC /* SearchPageView */,
 				492467C129F3F1FB00BE40CC /* CheckboxTableView */,
@@ -280,6 +291,7 @@
 				49C3376729F149B800A6C681 /* LoginViewController.swift in Sources */,
 				49C3377929F149FB00A6C681 /* PinLib.swift in Sources */,
 				492467DA29F7029A00BE40CC /* FileParsingHelper.swift in Sources */,
+				499BF54B29FD239B00E55A33 /* SkeletonView.swift in Sources */,
 				49C3377D29F14A2300A6C681 /* LayerShadowExtension.swift in Sources */,
 				492467C329F3F21700BE40CC /* CheckboxButton.swift in Sources */,
 				492467BE29F2CF8E00BE40CC /* CheckboxTableViewController.swift in Sources */,

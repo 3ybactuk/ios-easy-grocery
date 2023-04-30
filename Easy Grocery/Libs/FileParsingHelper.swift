@@ -42,7 +42,8 @@ class FileParsingHelper {
         
         // 0index, 1'Название', 2'О товаре', 3'Производитель', 4'Торговая марка', 5'Страна', 6'Вес', 7'Объем', 8'Состав', 9'Вид', 10'Энергетическая ценность', 11'Белки', 12'Жиры', 13'Углеводы', 14'Срок годности', 15'Стоимость', 16'IMG URL', 17'URL'
         for row in rows {
-            let columns = row.components(separatedBy: ",")
+            let columns = row.components(separatedBy: "|")
+            print(columns)
             let productName = columns[1]
             let weight = columns[6].count != 0 ? columns[6] : nil
             let volume = columns[7].count != 0 ? columns[7] : nil
