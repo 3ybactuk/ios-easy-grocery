@@ -52,8 +52,8 @@ final class ProductCell: UICollectionViewCell {
     private func setupTitleLabel() {
         productTitleLabel.font = .systemFont(ofSize: 14, weight: .medium)
         productTitleLabel.textColor = .label
-        productTitleLabel.numberOfLines = 3
-        productTitleLabel.lineBreakMode = .byWordWrapping
+        productTitleLabel.numberOfLines = 2
+        productTitleLabel.lineBreakMode = .byTruncatingTail
         contentView.addSubview(productTitleLabel)
         productTitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
@@ -92,6 +92,8 @@ final class ProductCell: UICollectionViewCell {
         productCompatibleIcon.pin(to: contentView, [.right, .top], 6)
     }
     
+    
+    // MARK:- Public functions
     public func configure(_ viewModel: ProductViewModel) {
         productTitleLabel.text = viewModel.name
         productPriceLabel.text = viewModel.price ?? "? ₽"

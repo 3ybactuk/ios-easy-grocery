@@ -75,7 +75,7 @@ final class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 2
+            return 3
         case 1:
             return 1
         case 2:
@@ -103,6 +103,11 @@ final class SettingsViewController: UITableViewController {
             case 1:
                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(preferenceSettingsTapped))
                 cell.textLabel?.text = "Настройки предпочтений"
+                cell.accessoryType = .disclosureIndicator
+                cell.addGestureRecognizer(tapGesture)
+            case 2:
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(manualBarcodeTapped))
+                cell.textLabel?.text = "Проверить штрих-код вручную"
                 cell.accessoryType = .disclosureIndicator
                 cell.addGestureRecognizer(tapGesture)
             default:
@@ -173,6 +178,33 @@ final class SettingsViewController: UITableViewController {
         
     }
     
+    @objc func manualBarcodeTapped() {
+        let alertController = UIAlertController(title: "Проверка по штрих-коду", message: nil, preferredStyle: .alert)
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Штрих-код"
+            textField.keyboardType = .numberPad
+        }
+        
+        // Add a "Done" button to the alert controller
+        alertController.addAction(UIAlertAction(title: "Готово", style: .default, handler: { (action) in
+            guard let text = alertController.textFields?.first?.text else {
+                return
+            }
+            // Do something with the text entered in the text field
+            ParsingHelper.checkBarcode(text)
+        }))
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) { (action) in
+            return
+        }
+
+        alertController.addAction(cancelAction)
+        
+        // Present the alert controller
+        present(alertController, animated: true, completion: nil)
+        
+    }
+    
     @objc func preferenceSettingsTapped() {
         let preferencesViewController = PreferencesViewController()
         preferencesViewController.viewControllerDelegate = self
@@ -204,4 +236,3 @@ extension SettingsViewController: PreferencesDelegate {
         navigationController?.popViewController(animated: true)
     }
 }
-

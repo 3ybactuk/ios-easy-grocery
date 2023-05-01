@@ -89,7 +89,6 @@ final class LoginView: UIControl {
             button.setHeight(48)
             button.setWidth(48)
             button.startAnimatingPressActions()
-            skipButton.backgroundColor = .white
             stackView.addArrangedSubview(button)
         }
         
@@ -100,7 +99,8 @@ final class LoginView: UIControl {
         forgotButton.setTitleColor(.darkGray, for: .normal)
         forgotButton.titleLabel?.font = .systemFont(ofSize: 12.0, weight: .light)
         
-        skipButton.backgroundColor = .systemGray2
+        skipButton.setTitleColor(.white, for: .normal)
+        skipButton.backgroundColor = .systemBlue
         
         stackView.setCustomSpacing(32.0, after: segmentedControl)
         stackView.setCustomSpacing(0, after: passwordField)
@@ -212,7 +212,7 @@ extension LoginView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // called when 'return' key pressed. return NO to ignore.
         print("TextField should return method called")
-        // may be useful: textField.resignFirstResponder()
+        textField.resignFirstResponder()
         return true
     }
 

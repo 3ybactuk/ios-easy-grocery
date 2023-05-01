@@ -34,7 +34,7 @@ class BarcodeScannerViewController: UIViewController {
             captureSession.addOutput(metadataOutput)
             
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            metadataOutput.metadataObjectTypes = [.ean8, .ean13, .pdf417]
+            metadataOutput.metadataObjectTypes = [.ean8, .ean13, .pdf417, .qr, .dataMatrix]
         } else {
             return
         }
@@ -47,6 +47,16 @@ class BarcodeScannerViewController: UIViewController {
         
         // Start the capture session
         captureSession.startRunning()
+    }
+    
+    private func setupRectangle() {
+        let barcodeRectView = BarcodeRectView()
+        barcodeRectView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(barcodeRectView)
+        barcodeRectView.pinCenterX(to: view.centerXAnchor)
+        barcodeRectView.pinCenterY(to: view.centerYAnchor)
+        barcodeRectView.pinWidth(to: view, 0.8)
+        barcodeRectView.pinHeight(to: view, 0.6)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -65,7 +75,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
         guard let stringValue = metadataObject.stringValue else { return }
         
         code = stringValue
-        print(code)
+        ParsingHelper.checkBarcode(code)
         
         // Stop the capture session to prevent further processing
         captureSession.stopRunning()

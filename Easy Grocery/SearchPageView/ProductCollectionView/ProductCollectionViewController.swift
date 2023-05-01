@@ -54,7 +54,7 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
         productViewModels = []
         self.isLoading = true
         self.showSkeleton()
-        self.productViewModels = FileParsingHelper.getProductsCSV()
+        self.productViewModels = ParsingHelper.getProductsCSV()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.isLoading = false
@@ -73,7 +73,7 @@ extension ProductCollectionViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var viewModel = ProductViewModel(name: "        ", weight: "     ", price: "     ", imageURL: URL(string: ""), productURL: URL(string: ""))
+        var viewModel = ProductViewModel("        ", weight: "     ", price: "     ")
         
         if !isLoading {
             viewModel = productViewModels[indexPath.item]
@@ -88,10 +88,22 @@ extension ProductCollectionViewController: UICollectionViewDataSource {
     }
 }
 
-extension ProductCollectionViewController: UICollectionViewDelegate {
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let newsVC = NewsViewController()
-//        newsVC.configure(with: productViewModels[indexPath.item])
-//        navigationController?.pushViewController(newsVC, animated: true)
-//    }
+extension ProductCollectionViewController: UICollectionViewDelegate, UIPopoverPresentationControllerDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let productPageVC = ProductPageViewController()
+        
+        productPageVC.configure(with: productViewModels[indexPath.item])
+        
+        let navController = UINavigationController(rootViewController: productPageVC)
+        
+        navController.modalPresentationStyle = .popover
+        navController.popoverPresentationController?.sourceView = self.view
+        navController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        
+        navController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+        
+        navController.popoverPresentationController?.delegate = self
+        
+        self.present(navController, animated: true, completion: nil)
+    }
 }

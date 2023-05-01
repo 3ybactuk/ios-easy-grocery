@@ -128,7 +128,8 @@ final class SearchPageViewController: UIViewController {
         print("Camera pressed")
         chooseButton(cameraUIButton)
         let barcodeScannerVC = BarcodeScannerViewController()
-        present(barcodeScannerVC, animated: true)
+        navigationController?.pushViewController(barcodeScannerVC, animated: true)
+//        present(barcodeScannerVC, animated: true)
 
 //        updateToolBar()
     }

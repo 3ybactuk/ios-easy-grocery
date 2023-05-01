@@ -25,9 +25,9 @@ final class PreferencesViewController: UIViewController {
         navigationController?.isToolbarHidden = false
         setupUI()
         
-        presetsTableVC.configure(FileParsingHelper.parseJSONFile(filename: "Presets") ?? [])
+        presetsTableVC.configure(ParsingHelper.parseJSONFile(filename: "Presets") ?? [])
         
-        manualTableVC.configure(FileParsingHelper.parseJSONFile(filename: "Manual") ?? [])
+        manualTableVC.configure(ParsingHelper.parseJSONFile(filename: "Manual") ?? [])
         
         presetsPressed()
         
@@ -241,7 +241,7 @@ final class PreferencesViewController: UIViewController {
             manualUpdated()
         }
 
-        FileParsingHelper.setExcludePreferences(Array(self.excludeSet))
+        ParsingHelper.setExcludePreferences(Array(self.excludeSet))
         
         
         logIn()

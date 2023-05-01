@@ -11,7 +11,7 @@ final class ProductViewModel: Codable {
     let weight: String?
     let volume: String?
     let contents: String?
-    let type: String?
+    let productType: String?
     let kcal: String?
     let protein: String?
     let fats: String?
@@ -23,7 +23,7 @@ final class ProductViewModel: Codable {
     
     var imageData: Data? = nil
     
-    init(name: String, description: String? = nil, manufacturer: String? = nil, trademark: String? = nil, country: String? = nil, weight: String? = nil, volume: String? = nil, contents: String? = nil, type: String? = nil, kcal: String? = nil, protein: String? = nil, fats: String? = nil, carbohydrates: String? = nil, expiresIn: String? = nil, price: String? = nil, imageURL: URL? = nil, productURL: URL? = nil, imageData: Data? = nil) {
+    init(_ name: String, _ description: String? = nil, manufacturer: String? = nil, trademark: String? = nil, country: String? = nil, weight: String? = nil, volume: String? = nil, contents: String? = nil, productType: String? = nil, kcal: String? = nil, protein: String? = nil, fats: String? = nil, carbohydrates: String? = nil, expiresIn: String? = nil, price: String? = nil, imageURL: URL? = nil, productURL: URL? = nil, imageData: Data? = nil) {
         self.name = name
         self.description = description
         self.manufacturer = manufacturer
@@ -32,7 +32,7 @@ final class ProductViewModel: Codable {
         self.weight = weight
         self.volume = volume
         self.contents = contents
-        self.type = type
+        self.productType = productType
         self.kcal = kcal
         self.protein = protein
         self.fats = fats

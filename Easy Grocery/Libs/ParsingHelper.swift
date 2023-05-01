@@ -1,6 +1,6 @@
 import UIKit
 
-class FileParsingHelper {
+class ParsingHelper {
     static func parseJSONFile(filename: String) -> [CheckboxCell]? {
         // Get the path to the JSON file
         guard let path = Bundle.main.path(forResource: filename, ofType: "JSON") else {
@@ -43,15 +43,26 @@ class FileParsingHelper {
         // 0index, 1'Название', 2'О товаре', 3'Производитель', 4'Торговая марка', 5'Страна', 6'Вес', 7'Объем', 8'Состав', 9'Вид', 10'Энергетическая ценность', 11'Белки', 12'Жиры', 13'Углеводы', 14'Срок годности', 15'Стоимость', 16'IMG URL', 17'URL'
         for row in rows {
             let columns = row.components(separatedBy: "|")
-//            print(columns)
+
             let productName = columns[1]
+            let description = columns[2].count != 0 ? columns[2] : nil
+            let manufacturer = columns[3].count != 0 ? columns[3] : nil
+            let trademark = columns[4].count != 0 ? columns[4] : nil
+            let country = columns[5].count != 0 ? columns[5] : nil
             let weight = columns[6].count != 0 ? columns[6] : nil
             let volume = columns[7].count != 0 ? columns[7] : nil
+            let contents = columns[8].count != 0 ? columns[8] : nil
+            let productType = columns[9].count != 0 ? columns[9] : nil
+            let kcal = columns[10].count != 0 ? columns[10] : nil
+            let protein = columns[11].count != 0 ? columns[11] : nil
+            let fats = columns[12].count != 0 ? columns[12] : nil
+            let carbohydrates = columns[13].count != 0 ? columns[13] : nil
+            let expiresIn = columns[14].count != 0 ? columns[14] : nil
             let price = columns[15].count != 0 ? columns[15] : nil
-            let imgURL = columns[16]
+            let imageURL = columns[16]
             let productURL = columns[17]
             
-            let product = ProductViewModel(name: productName, weight: weight, volume: volume, price: price, imageURL: URL(string: imgURL), productURL: URL(string: productURL))
+            let product = ProductViewModel(productName, description, manufacturer: manufacturer, trademark: trademark, country: country, weight: weight, volume: volume, contents: contents, productType: productType, kcal: kcal, protein: protein, fats: fats, carbohydrates: carbohydrates, expiresIn: expiresIn, price: price, imageURL: URL(string: imageURL), productURL: URL(string: productURL))
             
             products.append(product)
         }
@@ -82,5 +93,50 @@ class FileParsingHelper {
             let data = try! PropertyListSerialization.data(fromPropertyList: dict, format: .xml, options: 0)
             try! data.write(to: plistURL)
         }
+    }
+    
+    static func checkBarcode(_ barcode: String) -> Dictionary<String, String> {
+        var result = ["title": "", "description": "", "keywords": ""]
+        let regexps = [
+            "title": "(?<=<title>).*?(?=</title>)",
+            "description": "(?<=<meta name=\"description\" content=\").*?(?=>)",
+            "keywords": "(?<=<meta name=\"Keywords\" content=\").*?(?=>)"
+        ]
+        
+        if let url = URL(string: "https://barcode-list.ru/barcode/RU/%D0%9F%D0%BE%D0%B8%D1%81%D0%BA.htm?barcode=" + barcode) {
+            let request = URLRequest(url: url)
+            let session = URLSession.shared
+            let task = session.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    print("Error: \(error.localizedDescription)")
+                    return
+                }
+
+                guard let data = data else {
+                    print("Error: No data returned")
+                    return
+                }
+
+                if let htmlString = String(data: data, encoding: .utf8) {
+                    for key in regexps.keys {
+                        if let pattern = regexps[key] {
+                            let regex = try! NSRegularExpression(pattern: pattern, options: [])
+                            let range = NSRange(location: 0, length: htmlString.utf16.count)
+                            let match = regex.firstMatch(in: htmlString, options: [], range: range)
+                            if let matchRange = Range(match!.range, in: htmlString) {
+                                let matchString = htmlString[matchRange]
+                                result[key] = String(matchString)
+                            }
+                        }
+                    }
+                    dump(result)
+//                    print(htmlString)
+                }
+            }
+
+            task.resume()
+        }
+        
+        return result
     }
 }
