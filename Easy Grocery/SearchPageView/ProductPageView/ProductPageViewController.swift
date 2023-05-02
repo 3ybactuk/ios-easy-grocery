@@ -8,12 +8,16 @@ final class ProductPageViewController: UIViewController {
     private let productQuantityLabel = UILabel() // Volume or the weight of the product
     private let productPriceLabel = UILabel()
     private let productCompatibleIcon = UIImageView(image: UIImage(systemName: "exclamationmark.triangle.fill"))
+    private var KCALBackground = UIView()
+    
+    private var productModel = ProductViewModel("none")
     
     var shopURL = URL(string: "")
     
     private let productToShopButton = UIButton()
     
     let contentView = UIView()
+    let scrollView = UIScrollView()
     
     let KCALTable = UITableView()
     
@@ -31,18 +35,18 @@ final class ProductPageViewController: UIViewController {
     // MARK: - Private methods
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        let scrollView = UIScrollView(frame: view.bounds)
-        scrollView.contentSize.width = 0
-        scrollView.contentSize = CGSize(width: view.bounds.width, height: 1000)
+//        let scrollView = UIScrollView(frame: view.bounds)
+//        let scrollView = UIScrollView()
+//        scrollView.contentSize.width = 0
+//        scrollView.contentSize = CGSize(width: view.bounds.width, height: 2000)
         scrollView.isScrollEnabled = true
         scrollView.showsVerticalScrollIndicator = true
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.delegate = self
         view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.pin(to: view, [.top, .left, .right, .bottom])
         scrollView.addSubview(contentView)
-        
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.pin(to: scrollView, [.top, .bottom, .left, .right])
-        contentView.pinWidth(to: scrollView.widthAnchor)
         
         setupNavbar()
         setImageView()
@@ -57,7 +61,31 @@ final class ProductPageViewController: UIViewController {
         setContentsLabel()
         setKCALTable()
         
+        setOtherInfo()
+        
         setupProductCompatibleIcon()
+        
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+//        contentView.pin(to: scrollView, [.top, .bottom, .left, .right])
+//        scrollView.backgroundColor = .systemBlue
+//        contentView.backgroundColor = .systemRed
+        contentView.pinLeft(to: scrollView.contentLayoutGuide.leadingAnchor)
+        contentView.pinRight(to: scrollView.contentLayoutGuide.trailingAnchor)
+        contentView.pinTop(to: scrollView.contentLayoutGuide.topAnchor)
+        contentView.pinBottom(to: scrollView.contentLayoutGuide.bottomAnchor)
+        
+        contentView.pinCenter(to: scrollView)
+        contentView.pinWidth(to: scrollView.frameLayoutGuide.widthAnchor)
+//        contentView.pinHeight(to: scrollView.frameLayoutGuide.heightAnchor)
+        let equalHeightConstraint = contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
+        equalHeightConstraint.priority = UILayoutPriority(250)
+        equalHeightConstraint.isActive = true
+        let equalYConstraint = contentView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor)
+        equalYConstraint.priority = UILayoutPriority(250)
+        equalYConstraint.isActive = true
+        
+//        scrollView.contentSize = contentView.frame.size
     }
     
     private func setupNavbar() {
@@ -82,9 +110,8 @@ final class ProductPageViewController: UIViewController {
         productImageView.translatesAutoresizingMaskIntoConstraints = false
         productImageView.setHeight(180)
         productImageView.pinWidth(to: productImageView.heightAnchor)
-//        productImageView.pinBottom(to: productTitleLabel.topAnchor, 6)
         productImageView.pin(to: contentView, [.left, .top], 6)
-        productImageView.pinCenterY(to: contentView.centerYAnchor)
+        productImageView.pinRight(to: contentView.centerXAnchor)
     }
 
     private func setTitleLabel() {
@@ -96,8 +123,6 @@ final class ProductPageViewController: UIViewController {
         productTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         productTitleLabel.pin(to: contentView, [.top, .right], 6)
         productTitleLabel.pinLeft(to: productImageView.safeAreaLayoutGuide.trailingAnchor, 6)
-//        productTitleLabel.pinTop(to: imageView.bottomAnchor, 12)
-//        productTitleLabel.pin(to: view, [.left, .right], 16)
         productTitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 16).isActive = true
     }
     
@@ -143,17 +168,23 @@ final class ProductPageViewController: UIViewController {
         
         contentView.addSubview(productToShopButton)
         
+        productToShopButton.translatesAutoresizingMaskIntoConstraints = false
         productToShopButton.setHeight(48)
         productToShopButton.pinLeft(to: productImageView.safeAreaLayoutGuide.trailingAnchor, 6)
         productToShopButton.pinBottom(to: productImageView.bottomAnchor)
         productToShopButton.pinRight(to: contentView, 12)
     }
     
+    private func getBackgroundView() -> UIView {
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = .systemGray6
+        backgroundView.layer.cornerRadius = 8
+        backgroundView.layer.applyShadow(3)
+        return backgroundView
+    }
+    
     private func setDescriptionLabel() {
-        let descriptionBackgroundView = UIView()
-        descriptionBackgroundView.backgroundColor = .systemGray6
-        descriptionBackgroundView.layer.cornerRadius = 8
-        descriptionBackgroundView.layer.applyShadow(3)
+        let descriptionBackgroundView = getBackgroundView()
         contentView.addSubview(descriptionBackgroundView)
         
         let headerLabel = UILabel()
@@ -182,10 +213,7 @@ final class ProductPageViewController: UIViewController {
     }
     
     private func setContentsLabel() {
-        let contentsBackgroundView = UIView()
-        contentsBackgroundView.backgroundColor = .systemGray6
-        contentsBackgroundView.layer.cornerRadius = 8
-        contentsBackgroundView.layer.applyShadow(3)
+        let contentsBackgroundView = getBackgroundView()
         contentView.addSubview(contentsBackgroundView)
         
         let headerLabel = UILabel()
@@ -195,7 +223,7 @@ final class ProductPageViewController: UIViewController {
         contentView.addSubview(headerLabel)
         
         productContentsLabel.font = .systemFont(ofSize: 14, weight: .regular)
-        productContentsLabel.numberOfLines = 0
+        productContentsLabel.numberOfLines = 15
         productContentsLabel.lineBreakMode = .byTruncatingTail
         productContentsLabel.textColor = .label
         contentView.addSubview(productContentsLabel)
@@ -207,6 +235,7 @@ final class ProductPageViewController: UIViewController {
         productContentsLabel.translatesAutoresizingMaskIntoConstraints = false
         productContentsLabel.pin(to: contentView, [.left, .right], 24)
         productContentsLabel.pinTop(to: headerLabel.bottomAnchor, 24)
+//        productContentsLabel.setHeight(Int(headerLabel.font.lineHeight) * 5)
         
         contentsBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         contentsBackgroundView.pinTop(to: headerLabel.topAnchor, -12)
@@ -214,21 +243,159 @@ final class ProductPageViewController: UIViewController {
     }
     
     private func setKCALTable() {
+        let tableBackgroundView = getBackgroundView()
+        contentView.addSubview(tableBackgroundView)
+
         KCALTable.translatesAutoresizingMaskIntoConstraints = false
-        KCALTable.frame = contentView.bounds
+//        KCALTable.frame = contentView.bounds
         KCALTable.dataSource = self
         KCALTable.delegate = self
         KCALTable.register(TwoColumnTableCell.self, forCellReuseIdentifier: "cell")
+        KCALTable.isScrollEnabled = false
+        KCALTable.sizeToFit()
+        let tableHeader = UILabel()
+        tableHeader.font = .systemFont(ofSize: 16, weight: .bold)
+        tableHeader.text = "Пищевая ценность на 100 г"
+        tableHeader.textColor = .label
+
+//        KCALTable.tableHeaderView = tableHeader
+
         contentView.addSubview(KCALTable)
-        
-        KCALTable.pinTop(to: productContentsLabel.bottomAnchor, 24)
+//        contentView.addSubview(tableHeader)
+        contentView.addSubview(tableHeader)
+
+        tableHeader.translatesAutoresizingMaskIntoConstraints = false
+        tableHeader.setHeight(Int(tableHeader.font.lineHeight))
+        tableHeader.pinTop(to: productContentsLabel.bottomAnchor, 32)
+        tableHeader.pin(to: contentView, [.left, .right], 24)
+
+        KCALTable.setHeight(176)
+        KCALTable.pinTop(to: tableHeader.bottomAnchor, 12)
         KCALTable.pin(to: contentView, [.left, .right], 24)
+//        KCALTable.pinBottom(to: contentView.bottomAnchor, 50)
+
+        tableBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        tableBackgroundView.pinTop(to: tableHeader.topAnchor, -12)
+        tableBackgroundView.pin(to: KCALTable, [.left, .bottom, .right], -12)
+    }
+    
+//    private func setKCALTable() {
+//        let expiryDate = UILabel()
+//        let manufacturer = UILabel()
+//        let trademark = UILabel()
+//        let country = UILabel()
+//
+//        KCALBackground = getBackgroundView()
+//        contentView.addSubview(KCALBackground)
+//
+//        manufacturer.text = "Производитель"
+//        trademark.text = "Торговая марка"
+//        country.text = "Страна"
+//        expiryDate.text = "Срок годности"
+//
+//        let modelManufacturerText = productModel.manufacturer
+//        let modelTrademarkText = productModel.trademark
+//        let modelCountryText = productModel.country
+//        let modelExpiryText = productModel.expiresIn
+//
+//        for (label, modelText) in zip([manufacturer, trademark, country, expiryDate], [modelManufacturerText, modelTrademarkText, modelCountryText, modelExpiryText]) {
+//            let modelLabel = UILabel()
+//            modelLabel.text = modelText ?? ""
+//            modelLabel.font = .systemFont(ofSize: 14, weight: .light)
+//            modelLabel.textColor = .label
+//
+//            label.font = .systemFont(ofSize: 14, weight: .medium)
+//            label.textColor = .label
+//
+//            contentView.addSubview(label)
+//            contentView.addSubview(modelLabel)
+//
+//            label.translatesAutoresizingMaskIntoConstraints = false
+//            label.setHeight(Int(label.font.lineHeight))
+//            label.pinLeft(to: contentView, 24)
+//            label.pinRight(to: contentView.centerXAnchor)
+//
+//            modelLabel.translatesAutoresizingMaskIntoConstraints = false
+//            modelLabel.setHeight(Int(label.font.lineHeight))
+//            modelLabel.pinLeft(to: contentView.centerXAnchor)
+//            modelLabel.pinRight(to: contentView, 24)
+//            modelLabel.pinTop(to: label.topAnchor)
+//        }
+//
+//        let tableHeader = UILabel()
+//        tableHeader.font = .systemFont(ofSize: 16, weight: .bold)
+//        tableHeader.text = "Пищевая ценность на 100 г"
+//        tableHeader.textColor = .label
+//
+//        contentView.addSubview(tableHeader)
+//        tableHeader.translatesAutoresizingMaskIntoConstraints = false
+//        tableHeader.setHeight(Int(tableHeader.font.lineHeight))
+//        tableHeader.pinTop(to: productContentsLabel.bottomAnchor, 32)
+//        tableHeader.pin(to: contentView, [.left, .right], 24)
+//
+//        expiryDate.pinTop(to: tableHeader.bottomAnchor, 32)
+//        manufacturer.pinTop(to: expiryDate.bottomAnchor, 12)
+//        country.pinTop(to: manufacturer.bottomAnchor, 12)
+//        trademark.pinTop(to: country.bottomAnchor, 12)
+//
+//        KCALBackground.translatesAutoresizingMaskIntoConstraints = false
+//        KCALBackground.pinTop(to: tableHeader.topAnchor, -12)
+//        KCALBackground.pinBottom(to: trademark, -12)
+//        KCALBackground.pin(to: contentView, [.left, .right], 12)
+////        KCALBackground.pin(to: trademark, [.left, .bottom, .right], -12)
+//    }
+    
+    private func setOtherInfo() {
+        let manufacturer = UILabel()
+        let trademark = UILabel()
+        let country = UILabel()
+        let expiryDate = UILabel()
+        manufacturer.text = "Производитель"
+        trademark.text = "Торговая марка"
+        country.text = "Страна"
+        expiryDate.text = "Срок годности"
+        
+        let modelManufacturerText = productModel.manufacturer
+        let modelTrademarkText = productModel.trademark
+        let modelCountryText = productModel.country
+        let modelExpiryText = productModel.expiresIn
+        
+        for (label, modelText) in zip([manufacturer, trademark, country, expiryDate], [modelManufacturerText, modelTrademarkText, modelCountryText, modelExpiryText]) {
+            let modelLabel = UILabel()
+            modelLabel.text = modelText ?? ""
+            modelLabel.font = .systemFont(ofSize: 14, weight: .light)
+            modelLabel.textColor = .label
+            
+            label.font = .systemFont(ofSize: 14, weight: .medium)
+            label.textColor = .label
+            
+            contentView.addSubview(label)
+            contentView.addSubview(modelLabel)
+            
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.setHeight(Int(label.font.lineHeight))
+            label.pinLeft(to: contentView, 24)
+            label.pinRight(to: contentView.centerXAnchor)
+            
+            modelLabel.translatesAutoresizingMaskIntoConstraints = false
+            modelLabel.setHeight(Int(label.font.lineHeight))
+            modelLabel.pinLeft(to: contentView.centerXAnchor)
+            modelLabel.pinRight(to: contentView, 24)
+            modelLabel.pinTop(to: label.topAnchor)
+        }
+        
+        expiryDate.pinTop(to: KCALTable.bottomAnchor, 32)
+        manufacturer.pinTop(to: expiryDate.bottomAnchor, 12)
+        country.pinTop(to: manufacturer.bottomAnchor, 12)
+        trademark.pinTop(to: country.bottomAnchor, 12)
+        trademark.pinBottom(to: contentView.bottomAnchor, 8)
     }
     
     private func setupProductCompatibleIcon() {
         productCompatibleIcon.tintColor = .systemRed
         productCompatibleIcon.layer.applyShadow()
         contentView.addSubview(productCompatibleIcon)
+        productCompatibleIcon.translatesAutoresizingMaskIntoConstraints = false
         productCompatibleIcon.setHeight(30)
         productCompatibleIcon.setWidth(30)
         productCompatibleIcon.pin(to: contentView, [.left, .top], 6)
@@ -236,6 +403,8 @@ final class ProductPageViewController: UIViewController {
     
     // MARK: - Public Methods
     public func configure(with viewModel: ProductViewModel) {
+        productModel = viewModel
+        
         productTitleLabel.text = viewModel.name
         productPriceLabel.text = viewModel.price ?? "? ₽"
         productQuantityLabel.text = viewModel.volume ?? viewModel.weight ?? ""
@@ -269,14 +438,22 @@ final class ProductPageViewController: UIViewController {
     
     @objc
     private func closeButtonTapped() {
-        dismiss(animated: true)
-//        self.navigationController?.popViewController(animated: true)
+//        dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension ProductPageViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.x != 0 {
+            scrollView.contentOffset.x = 0
+        }
     }
 }
 
 extension ProductPageViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -287,15 +464,25 @@ extension ProductPageViewController: UITableViewDataSource {
 extension ProductPageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TwoColumnTableCell
-
-        if indexPath.section == 0 {
-            // Set up the header row
-            cell.column1Label.text = "Header 1"
-            cell.column2Label.text = "Header 2"
-        } else {
-            // Set up the data rows
-            cell.column1Label.text = "Data \(indexPath.row + 1), Column 1"
-            cell.column2Label.text = "Data \(indexPath.row + 1), Column 2"
+        
+        switch indexPath.row {
+        case 0:
+            cell.column1Label.text = "Белки"
+            cell.column2Label.text = productModel.protein ?? ""
+        case 1:
+            cell.column1Label.text = "Жиры"
+            cell.column2Label.text = productModel.fats ?? ""
+        case 2:
+            cell.column1Label.text = "Углеводы"
+            cell.column2Label.text = productModel.carbohydrates ?? ""
+        case 3:
+            cell.column1Label.text = "Калорийность"
+            cell.column2Label.text = productModel.kcal ?? ""
+            if (!(cell.column2Label.text?.contains("ккал") ?? true)) {
+                cell.column2Label.text? += " ккал"
+            }
+        default:
+            break
         }
 
         return cell

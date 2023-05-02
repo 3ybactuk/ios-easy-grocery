@@ -23,9 +23,9 @@ class CheckboxTableViewController: UITableViewController {
     func updateTableViewSelection() {
         for (row, cell) in items.enumerated() {
             let indexPath = IndexPath(row: row, section: 0)
-            print(row, cell.title)
+//            print(row, cell.title)
             if selectedItems.contains(cell) {
-                print("contains")
+                print("contains ", row, cell.title)
                 tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
             } else {
                 tableView.deselectRow(at: indexPath, animated: false)

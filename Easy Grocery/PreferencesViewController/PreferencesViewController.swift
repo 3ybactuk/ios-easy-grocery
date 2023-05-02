@@ -24,14 +24,28 @@ final class PreferencesViewController: UIViewController {
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
         setupUI()
+
+        let isLoggedIn = UserDefaults.standard.bool(forKey: "is_authenticated")
+        
+        if isLoggedIn {
+            excludeSet = Set(ParsingHelper.getExcludePreferences())
+        }
+        print("Loggedin:", isLoggedIn, "exclude:", excludeSet)
         
         presetsTableVC.configure(ParsingHelper.parseJSONFile(filename: "Presets") ?? [])
-        
         manualTableVC.configure(ParsingHelper.parseJSONFile(filename: "Manual") ?? [])
         
-        presetsPressed()
+        manualUpdated()
+        presetsUpdated()
         
-//        isLoggedIn = UserDefaults.standard.bool(forKey: "is_authenticated")
+        presetsPressed()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.isToolbarHidden = false
+        
     }
     
     // MARK:- Setup

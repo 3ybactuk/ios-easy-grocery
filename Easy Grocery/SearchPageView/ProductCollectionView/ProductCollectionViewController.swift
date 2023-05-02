@@ -94,16 +94,17 @@ extension ProductCollectionViewController: UICollectionViewDelegate, UIPopoverPr
         
         productPageVC.configure(with: productViewModels[indexPath.item])
         
-        let navController = UINavigationController(rootViewController: productPageVC)
+        self.navigationController?.pushViewController(productPageVC, animated: true)
+//        let navController = UINavigationController(rootViewController: productPageVC)
         
-        navController.modalPresentationStyle = .popover
-        navController.popoverPresentationController?.sourceView = self.view
-        navController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-        
-        navController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-        
-        navController.popoverPresentationController?.delegate = self
-        
-        self.present(navController, animated: true, completion: nil)
+//        navController.modalPresentationStyle = .popover
+//        navController.popoverPresentationController?.sourceView = self.view
+//        navController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+//
+//        navController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+//
+//        navController.popoverPresentationController?.delegate = self
+//
+//        self.present(navController, animated: true, completion: nil)
     }
 }
