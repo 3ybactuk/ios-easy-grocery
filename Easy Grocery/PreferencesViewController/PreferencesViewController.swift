@@ -32,8 +32,13 @@ final class PreferencesViewController: UIViewController {
         }
         print("Loggedin:", isLoggedIn, "exclude:", excludeSet)
         
-        presetsTableVC.configure(ParsingHelper.parseJSONFile(filename: "Presets") ?? [])
-        manualTableVC.configure(ParsingHelper.parseJSONFile(filename: "Manual") ?? [])
+        if (!isLoggedIn) {
+            presetsTableVC.configure(items: ParsingHelper.parseJSONFile(filename: "Presets") ?? [])
+            manualTableVC.configure(items: ParsingHelper.parseJSONFile(filename: "Manual") ?? [])
+        } else {
+            presetsTableVC.configure(items: ParsingHelper.loadSavedJSONFile(filename: "Presets") ?? [], selectedItems: ParsingHelper.loadSavedJSONFile(filename: "PresetsSelected") ?? [])
+            manualTableVC.configure(items: ParsingHelper.loadSavedJSONFile(filename: "Manual") ?? [], selectedItems: ParsingHelper.loadSavedJSONFile(filename: "ManualSelected") ?? [])
+        }
         
         manualUpdated()
         presetsUpdated()
@@ -254,9 +259,13 @@ final class PreferencesViewController: UIViewController {
         } else if currentView == 1 {
             manualUpdated()
         }
-
+        print("Done pressed")
         ParsingHelper.setExcludePreferences(Array(self.excludeSet))
         
+        ParsingHelper.saveJSONFile(filename: "Manual", items: manualTableVC.items)
+        ParsingHelper.saveJSONFile(filename: "ManualSelected", items: manualTableVC.selectedItems)
+        ParsingHelper.saveJSONFile(filename: "Presets", items: presetsTableVC.items)
+        ParsingHelper.saveJSONFile(filename: "PresetsSelected", items: presetsTableVC.selectedItems)
         
         logIn()
         viewControllerDelegate?.switchToSearch()
@@ -264,7 +273,7 @@ final class PreferencesViewController: UIViewController {
     
     func logIn() {
         let def = UserDefaults.standard
-        def.set(true, forKey: "is_authenticated") // save true flag to UserDefaults
+        def.set(true, forKey: "is_authenticated")
         def.synchronize()
     }
 }

@@ -1,9 +1,14 @@
 import UIKit
 
 class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
-    private var collectionView: UICollectionView!
+    var collectionView: UICollectionView!
     private var productViewModels = [ProductViewModel]()
     private var isLoading = false
+    private var excludedViewModels = [ProductViewModel]()
+    
+    var excludeSet = Set<String>()
+    
+    var hideExcludedEnabled = false
     
     public static let imageCache = NSCache<NSString, AnyObject>()
     
@@ -21,6 +26,11 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
         } else {
             hideSkeleton()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchProducts()
     }
     
     private func setupUI() {
@@ -50,13 +60,44 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
         collectionView.pin(to: view, [.top, .bottom, .left, .right])
     }
     
-    private func fetchProducts() {
+    private func shouldExcludeProduct(excludedProduct: String, product: ProductViewModel) -> Bool {
+        let description = product.description ?? ""
+        let contents = product.contents ?? ""
+        let productType = product.productType ?? ""
+        let name = product.name
+        for text in [description, contents, productType, name] {
+            if text.lowercased().contains(excludedProduct.lowercased()) {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    func fetchProducts() {
         productViewModels = []
         self.isLoading = true
         self.showSkeleton()
-        self.productViewModels = ParsingHelper.getProductsCSV()
+        self.productViewModels = []
+        self.excludeSet = Set(ParsingHelper.getExcludePreferences())
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        
+        for product in ParsingHelper.getProductsCSV() {
+            var shouldAppend = true
+            for excludedProduct in excludeSet {
+                if shouldExcludeProduct(excludedProduct: excludedProduct, product: product) {
+                    excludedViewModels.append(product)
+                    shouldAppend = false
+                    break
+                }
+            }
+            
+            if !hideExcludedEnabled || shouldAppend {
+                productViewModels.append(product)
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.isLoading = false
             self.hideSkeleton()
             self.collectionView.reloadData()
@@ -80,7 +121,7 @@ extension ProductCollectionViewController: UICollectionViewDataSource {
         }
         
         if let productCell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell {
-            productCell.configure(viewModel)
+            productCell.configure(viewModel, isExcluded: excludedViewModels.contains(viewModel))
             return productCell
         }
         
@@ -92,7 +133,7 @@ extension ProductCollectionViewController: UICollectionViewDelegate, UIPopoverPr
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let productPageVC = ProductPageViewController()
         
-        productPageVC.configure(with: productViewModels[indexPath.item])
+        productPageVC.configure(with: productViewModels[indexPath.item], hideExcluded: hideExcludedEnabled)
         
         self.navigationController?.pushViewController(productPageVC, animated: true)
 //        let navController = UINavigationController(rootViewController: productPageVC)

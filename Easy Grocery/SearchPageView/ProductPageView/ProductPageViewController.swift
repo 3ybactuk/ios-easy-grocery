@@ -399,10 +399,11 @@ final class ProductPageViewController: UIViewController {
         productCompatibleIcon.setHeight(30)
         productCompatibleIcon.setWidth(30)
         productCompatibleIcon.pin(to: contentView, [.left, .top], 6)
+//        productCompatibleIcon.isHidden = true
     }
     
     // MARK: - Public Methods
-    public func configure(with viewModel: ProductViewModel) {
+    public func configure(with viewModel: ProductViewModel, hideExcluded: Bool) {
         productModel = viewModel
         
         productTitleLabel.text = viewModel.name
@@ -411,6 +412,8 @@ final class ProductPageViewController: UIViewController {
         productDescriptionLabel.text = viewModel.description ?? "Описание отсутствует."
         productContentsLabel.text = viewModel.contents ?? "Состав отсутствует."
         shopURL = viewModel.productURL
+        
+        productCompatibleIcon.isHidden = hideExcluded
         
         if let image = ProductCollectionViewController.imageCache.object(forKey: (viewModel.imageURL?.absoluteString ?? "") as NSString) as? UIImage {
             productImageView.image = image
@@ -478,7 +481,7 @@ extension ProductPageViewController: UITableViewDelegate {
         case 3:
             cell.column1Label.text = "Калорийность"
             cell.column2Label.text = productModel.kcal ?? ""
-            if (!(cell.column2Label.text?.contains("ккал") ?? true)) {
+            if ((cell.column2Label.text?.count ?? 0) > 0 && !(cell.column2Label.text?.contains("ккал") ?? true)) {
                 cell.column2Label.text? += " ккал"
             }
         default:

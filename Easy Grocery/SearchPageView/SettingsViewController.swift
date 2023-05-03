@@ -4,6 +4,9 @@ final class SettingsViewController: UITableViewController {
     let switchControl = UISwitch()
     let exitCell = UITableViewCell(style: .default, reuseIdentifier: nil)
     
+//    var preferencesVCDelegate: PreferencesDelegate?
+    var switchDelegate: SettingsHideSwitchDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = false
@@ -30,7 +33,7 @@ final class SettingsViewController: UITableViewController {
 
         tableView.tableFooterView = exitCell
         
-        switchControl.isOn = true
+        switchControl.isOn = false
         switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
 
         setupNavbar()
@@ -157,14 +160,14 @@ final class SettingsViewController: UITableViewController {
         
         // Remove the current root view controller from the window
         guard let window = UIApplication.shared.windows.first else { return }
-        navigationController?.popToRootViewController(animated: false)
+        navigationController?.popToRootViewController(animated: true)
         window.rootViewController?.dismiss(animated: true, completion: nil)
         
         // Create an instance of the login view controller
         let loginVC = LoginViewController()
         
         // Set the login view controller as the root view controller of the window
-        window.rootViewController = loginVC
+        window.rootViewController = UINavigationController(rootViewController: loginVC)
         window.makeKeyAndVisible()
     }
     
@@ -217,10 +220,12 @@ final class SettingsViewController: UITableViewController {
     
     @objc func switchValueChanged(_ sender: UISwitch) {
         if sender.isOn {
-            print("Switch is on")
+            switchDelegate?.hideExcluded()
+//            print("Switch is on")
             // Switch is on
         } else {
-            print("Switch is off")
+            switchDelegate?.showExcluded()
+//            print("Switch is off")
             // Switch is off
         }
     }
@@ -235,4 +240,9 @@ extension SettingsViewController: PreferencesDelegate {
     func switchToSearch() {
         navigationController?.popViewController(animated: true)
     }
+}
+
+protocol SettingsHideSwitchDelegate {
+    func hideExcluded()
+    func showExcluded()
 }

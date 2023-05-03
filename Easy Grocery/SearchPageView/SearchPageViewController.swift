@@ -13,13 +13,17 @@ final class SearchPageViewController: UIViewController {
 
     var currentView = 0
     
+    var hideExcludedEnabled = false
+    
     let settingsViewController = SettingsViewController()
     let productTableViewController = ProductCollectionViewController()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = true
+        settingsViewController.switchDelegate = self
         setupUI()
         
         searchPressed()
@@ -38,46 +42,6 @@ final class SearchPageViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         setupNavbar()
-//        setupToolbar()
-    }
-    
-    private func setupToolbar() {
-        cameraUIButton.setImage(UIImage(systemName: "camera.fill"), for: .normal)
-        cameraUIButton.setTitle("   Сканер", for: .normal)
-        cameraUIButton.addTarget(self, action: #selector(cameraPressed), for: .touchUpInside)
-        
-        searchUIButton.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        searchUIButton.setTitle("   Поиск", for: .normal)
-        searchUIButton.addTarget(self, action: #selector(searchPressed), for: .touchUpInside)
-        
-        settingsUIButton.setImage(UIImage(systemName: "gear"), for: .normal)
-        settingsUIButton.setTitle("Настройки", for: .normal)
-        settingsUIButton.addTarget(self, action: #selector(settingsPressed), for: .touchUpInside)
-
-        for button in [cameraUIButton, searchUIButton, settingsUIButton] {
-            button.setTitleColor(.systemBlue, for: .normal)
-            button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .medium)
-            button.sizeToFit()
-            button.scaleImage(1.5)
-            
-            button.centerVertically()
-        }
-        
-        cameraUIButton.setColor(.systemGray2)
-        searchUIButton.setColor(.systemBlue)
-        settingsUIButton.setColor(.systemGray2)
-        
-        updateToolBar()
-    }
-    
-    private func updateToolBar() {
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
-        
-        cameraButton = UIBarButtonItem(customView: cameraUIButton)
-        searchButton = UIBarButtonItem(customView: searchUIButton)
-//        settingsButton = UIBarButtonItem(customView: settingsUIButton)
-        
-        self.toolbarItems = [flexibleSpace, cameraButton, flexibleSpace, searchButton, flexibleSpace]
     }
     
     private func setupNavbar() {
@@ -112,13 +76,14 @@ final class SearchPageViewController: UIViewController {
     @objc
     private func searchPressed() {
         currentView = 1
-        print("Search pressed")
+        print("Search pressed. Hide excluded:", self.hideExcludedEnabled)
         chooseButton(searchUIButton)
 //        updateToolBar()
         
+        productTableViewController.hideExcludedEnabled = self.hideExcludedEnabled
         addChild(productTableViewController)
         view.addSubview(productTableViewController.view)
-        
+        productTableViewController.collectionView.reloadData()
         productTableViewController.view.pin(to: view, [.top, .bottom, .left, .right])
     }
     
@@ -138,5 +103,15 @@ final class SearchPageViewController: UIViewController {
     private func settingsPressed() {
         print("Settings pressed")
         navigationController?.pushViewController(settingsViewController, animated: true)
+    }
+}
+
+extension SearchPageViewController: SettingsHideSwitchDelegate {
+    func hideExcluded() {
+        self.hideExcludedEnabled = true
+    }
+    
+    func showExcluded() {
+        self.hideExcludedEnabled = false
     }
 }

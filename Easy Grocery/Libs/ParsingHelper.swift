@@ -22,6 +22,44 @@ class ParsingHelper {
         }
     }
     
+    static func loadSavedJSONFile(filename: String) -> [CheckboxCell]? {
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return nil
+        }
+        
+        do {
+            let path = documentsDirectory.appendingPathComponent(filename + ".JSON")
+            if let data = try? Data(contentsOf: path) {
+                let decoder = JSONDecoder()
+                let cells = try decoder.decode([CheckboxCell].self, from: data)
+                return cells
+            }
+        } catch {
+            print("Error decoding JSON file: \(error)")
+            return nil
+        }
+        
+        return nil
+    }
+    
+    static func saveJSONFile(filename: String, items: [CheckboxCell]) {
+        let encoder = JSONEncoder()
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            return
+        }
+        
+        do {
+            let data = try encoder.encode(items)
+            
+            let path = documentsDirectory.appendingPathComponent(filename + ".JSON")
+            print(path)
+            try data.write(to: path)
+        } catch {
+            print("Error writing JSON file: \(error)")
+            return
+        }
+    }
+    
     static func getProductsCSV() -> [ProductViewModel] {
         var products = [ProductViewModel]()
         

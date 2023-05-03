@@ -2,7 +2,13 @@ import UIKit
 
 // 'Название', 'О товаре', 'Производитель', 'Торговая марка', 'Страна', 'Вес', 'Объем', 'Состав', 'Вид', 'Энергетическая ценность', 'Белки', 'Жиры', 'Углеводы', 'Срок годности', 'Стоимость', 'IMG URL', 'URL'
 
-final class ProductViewModel: Codable {
+final class ProductViewModel: Codable, Equatable {
+    static func == (lhs: ProductViewModel, rhs: ProductViewModel) -> Bool {
+        let leftURL = lhs.productURL ?? URL(string: "")
+        let rightURL = rhs.productURL ?? URL(string: "")
+        return leftURL == rightURL
+    }
+    
     let name: String
     let description: String?
     let manufacturer: String?

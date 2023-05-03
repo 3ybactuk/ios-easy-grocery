@@ -68,10 +68,11 @@ class CheckboxTableViewController: UITableViewController {
         return cell
     }
     
-    func configure(_ items: [CheckboxCell], checkboxInactiveType: String = "square", checkboxActiveType: String = "checkmark.square.fill") {
+    func configure(items: [CheckboxCell], selectedItems: [CheckboxCell]? = nil, checkboxInactiveType: String = "square", checkboxActiveType: String = "checkmark.square.fill") {
         self.checkboxActiveType = checkboxActiveType
         self.checkboxInActiveType = checkboxInactiveType
         self.items.append(contentsOf: items)
+        self.selectedItems.append(contentsOf: selectedItems ?? [])
     }
 
     // MARK: - Checkbox button action

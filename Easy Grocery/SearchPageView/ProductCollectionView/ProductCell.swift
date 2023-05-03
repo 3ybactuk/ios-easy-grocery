@@ -90,14 +90,17 @@ final class ProductCell: UICollectionViewCell {
         productCompatibleIcon.setHeight(30)
         productCompatibleIcon.setWidth(30)
         productCompatibleIcon.pin(to: contentView, [.right, .top], 6)
+//        productCompatibleIcon.isHidden = true
     }
     
     
     // MARK:- Public functions
-    public func configure(_ viewModel: ProductViewModel) {
+    public func configure(_ viewModel: ProductViewModel, isExcluded: Bool) {
         productTitleLabel.text = viewModel.name
         productPriceLabel.text = viewModel.price ?? "? ₽"
         productQuantityLabel.text = viewModel.volume ?? viewModel.weight ?? ""
+        
+        productCompatibleIcon.isHidden = !isExcluded
         
         if let image = ProductCollectionViewController.imageCache.object(forKey: (viewModel.imageURL?.absoluteString ?? "") as NSString) as? UIImage {
             productImageView.image = image
