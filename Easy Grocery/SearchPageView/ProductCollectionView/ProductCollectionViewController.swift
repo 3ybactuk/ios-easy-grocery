@@ -6,7 +6,11 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
     private var isLoading = false
     private var excludedViewModels = [ProductViewModel]()
     
+    private var currentPage = 0
+    private var totalPages = 1
+    
     var excludeSet = Set<String>()
+    
     
     var hideExcludedEnabled = false
     
@@ -63,13 +67,20 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
     
     func fetchProducts() {
         productViewModels = []
+        collectionView.isScrollEnabled = false
         self.isLoading = true
         self.showSkeleton()
         self.productViewModels = []
         self.excludeSet = Set(ParsingHelper.getExcludePreferences())
         
+        let pageSize = 16
+        let startIndex = max(0, currentPage * pageSize - pageSize)
+//        let startIndex = 0
+        let endIndex = currentPage * pageSize + pageSize
+        let products = ParsingHelper.getProductsCSV()
+        totalPages = products.count / pageSize
         
-        for product in ParsingHelper.getProductsCSV() {
+        for product in products[startIndex..<endIndex] {
             var shouldAppend = true
             for excludedItem in excludeSet {
                 if ParsingHelper.shouldExcludeProductByItem(excludedItem: excludedItem, product: product) {
@@ -84,9 +95,25 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            self.collectionView.isScrollEnabled = true
             self.isLoading = false
             self.hideSkeleton()
+            
+            let currentItemCount = self.productViewModels.count
+            let newItems = products[currentItemCount..<min(currentItemCount+pageSize, products.count)]
+            let newIndexPaths = (currentItemCount..<currentItemCount+newItems.count).map { IndexPath(item: $0, section: 0) }
+            
+//            self.productViewModels.append(contentsOf: newItems)
+//            self.excludedViewModels.append(contentsOf: excludedProducts)
+            
+            if self.productViewModels.count > pageSize {
+                // Scroll to the middle of the new page
+                let middleIndex = currentItemCount + (pageSize) 
+                let middleIndexPath = IndexPath(item: middleIndex, section: 0)
+                self.collectionView.scrollToItem(at: middleIndexPath, at: .centeredVertically, animated: false)
+            }
+            
             self.collectionView.reloadData()
         }
     }
@@ -123,5 +150,28 @@ extension ProductCollectionViewController: UICollectionViewDelegate, UIPopoverPr
         productPageVC.configure(with: productViewModels[indexPath.item], isExcluded: excludedViewModels.contains(productViewModels[indexPath.item]))
         
         self.navigationController?.pushViewController(productPageVC, animated: true)
+    }
+}
+
+extension ProductCollectionViewController: UICollectionViewDelegateFlowLayout {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentHeight = collectionView.contentSize.height
+        let offsetY = scrollView.contentOffset.y
+        let visibleHeight = scrollView.frame.height
+        
+        if 0.7 * offsetY < 0 && currentPage > 0 {
+            // Load previous page
+            currentPage -= 1
+            fetchProducts()
+        } else if 1.3 * offsetY > contentHeight - visibleHeight && currentPage < totalPages - 1 {
+            // Load next page
+            currentPage += 1
+            fetchProducts()
+        }
+        
+//        if 1.3 * offsetY > contentHeight - visibleHeight {
+//            currentPage += 1
+//            fetchProducts()
+//        }
     }
 }
