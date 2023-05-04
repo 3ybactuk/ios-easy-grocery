@@ -60,20 +60,6 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
         collectionView.pin(to: view, [.top, .bottom, .left, .right])
     }
     
-    private func shouldExcludeProduct(excludedProduct: String, product: ProductViewModel) -> Bool {
-        let description = product.description ?? ""
-        let contents = product.contents ?? ""
-        let productType = product.productType ?? ""
-        let name = product.name
-        for text in [description, contents, productType, name] {
-            if text.lowercased().contains(excludedProduct.lowercased()) {
-                return true
-            }
-        }
-        
-        return false
-    }
-    
     func fetchProducts() {
         productViewModels = []
         self.isLoading = true
@@ -84,8 +70,8 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
         
         for product in ParsingHelper.getProductsCSV() {
             var shouldAppend = true
-            for excludedProduct in excludeSet {
-                if shouldExcludeProduct(excludedProduct: excludedProduct, product: product) {
+            for excludedItem in excludeSet {
+                if ParsingHelper.shouldExcludeProductByItem(excludedItem: excludedItem, product: product) {
                     excludedViewModels.append(product)
                     shouldAppend = false
                     break
@@ -133,19 +119,8 @@ extension ProductCollectionViewController: UICollectionViewDelegate, UIPopoverPr
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let productPageVC = ProductPageViewController()
         
-        productPageVC.configure(with: productViewModels[indexPath.item], hideExcluded: hideExcludedEnabled)
+        productPageVC.configure(with: productViewModels[indexPath.item], isExcluded: excludedViewModels.contains(productViewModels[indexPath.item]))
         
         self.navigationController?.pushViewController(productPageVC, animated: true)
-//        let navController = UINavigationController(rootViewController: productPageVC)
-        
-//        navController.modalPresentationStyle = .popover
-//        navController.popoverPresentationController?.sourceView = self.view
-//        navController.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-//
-//        navController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-//
-//        navController.popoverPresentationController?.delegate = self
-//
-//        self.present(navController, animated: true, completion: nil)
     }
 }

@@ -33,7 +33,7 @@ final class LoginView: UIControl {
         stackView.axis = .vertical
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-//        stackView.distribution =
+//        stackView.distribution = .fill
         stackView.backgroundColor = .systemGray5
         stackView.layer.cornerRadius = 12
         stackView.spacing = 8

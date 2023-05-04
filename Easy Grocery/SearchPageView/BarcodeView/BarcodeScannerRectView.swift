@@ -1,6 +1,6 @@
 import UIKit
 
-class BarcodeRectView: UIView {
+class BarcodeScannerRectView: UIView {
     
     override func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext() else { return }

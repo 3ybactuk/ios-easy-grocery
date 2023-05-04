@@ -258,10 +258,7 @@ final class ProductPageViewController: UIViewController {
         tableHeader.text = "Пищевая ценность на 100 г"
         tableHeader.textColor = .label
 
-//        KCALTable.tableHeaderView = tableHeader
-
         contentView.addSubview(KCALTable)
-//        contentView.addSubview(tableHeader)
         contentView.addSubview(tableHeader)
 
         tableHeader.translatesAutoresizingMaskIntoConstraints = false
@@ -272,78 +269,11 @@ final class ProductPageViewController: UIViewController {
         KCALTable.setHeight(176)
         KCALTable.pinTop(to: tableHeader.bottomAnchor, 12)
         KCALTable.pin(to: contentView, [.left, .right], 24)
-//        KCALTable.pinBottom(to: contentView.bottomAnchor, 50)
 
         tableBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         tableBackgroundView.pinTop(to: tableHeader.topAnchor, -12)
         tableBackgroundView.pin(to: KCALTable, [.left, .bottom, .right], -12)
     }
-    
-//    private func setKCALTable() {
-//        let expiryDate = UILabel()
-//        let manufacturer = UILabel()
-//        let trademark = UILabel()
-//        let country = UILabel()
-//
-//        KCALBackground = getBackgroundView()
-//        contentView.addSubview(KCALBackground)
-//
-//        manufacturer.text = "Производитель"
-//        trademark.text = "Торговая марка"
-//        country.text = "Страна"
-//        expiryDate.text = "Срок годности"
-//
-//        let modelManufacturerText = productModel.manufacturer
-//        let modelTrademarkText = productModel.trademark
-//        let modelCountryText = productModel.country
-//        let modelExpiryText = productModel.expiresIn
-//
-//        for (label, modelText) in zip([manufacturer, trademark, country, expiryDate], [modelManufacturerText, modelTrademarkText, modelCountryText, modelExpiryText]) {
-//            let modelLabel = UILabel()
-//            modelLabel.text = modelText ?? ""
-//            modelLabel.font = .systemFont(ofSize: 14, weight: .light)
-//            modelLabel.textColor = .label
-//
-//            label.font = .systemFont(ofSize: 14, weight: .medium)
-//            label.textColor = .label
-//
-//            contentView.addSubview(label)
-//            contentView.addSubview(modelLabel)
-//
-//            label.translatesAutoresizingMaskIntoConstraints = false
-//            label.setHeight(Int(label.font.lineHeight))
-//            label.pinLeft(to: contentView, 24)
-//            label.pinRight(to: contentView.centerXAnchor)
-//
-//            modelLabel.translatesAutoresizingMaskIntoConstraints = false
-//            modelLabel.setHeight(Int(label.font.lineHeight))
-//            modelLabel.pinLeft(to: contentView.centerXAnchor)
-//            modelLabel.pinRight(to: contentView, 24)
-//            modelLabel.pinTop(to: label.topAnchor)
-//        }
-//
-//        let tableHeader = UILabel()
-//        tableHeader.font = .systemFont(ofSize: 16, weight: .bold)
-//        tableHeader.text = "Пищевая ценность на 100 г"
-//        tableHeader.textColor = .label
-//
-//        contentView.addSubview(tableHeader)
-//        tableHeader.translatesAutoresizingMaskIntoConstraints = false
-//        tableHeader.setHeight(Int(tableHeader.font.lineHeight))
-//        tableHeader.pinTop(to: productContentsLabel.bottomAnchor, 32)
-//        tableHeader.pin(to: contentView, [.left, .right], 24)
-//
-//        expiryDate.pinTop(to: tableHeader.bottomAnchor, 32)
-//        manufacturer.pinTop(to: expiryDate.bottomAnchor, 12)
-//        country.pinTop(to: manufacturer.bottomAnchor, 12)
-//        trademark.pinTop(to: country.bottomAnchor, 12)
-//
-//        KCALBackground.translatesAutoresizingMaskIntoConstraints = false
-//        KCALBackground.pinTop(to: tableHeader.topAnchor, -12)
-//        KCALBackground.pinBottom(to: trademark, -12)
-//        KCALBackground.pin(to: contentView, [.left, .right], 12)
-////        KCALBackground.pin(to: trademark, [.left, .bottom, .right], -12)
-//    }
     
     private func setOtherInfo() {
         let manufacturer = UILabel()
@@ -403,7 +333,7 @@ final class ProductPageViewController: UIViewController {
     }
     
     // MARK: - Public Methods
-    public func configure(with viewModel: ProductViewModel, hideExcluded: Bool) {
+    public func configure(with viewModel: ProductViewModel, isExcluded: Bool) {
         productModel = viewModel
         
         productTitleLabel.text = viewModel.name
@@ -413,7 +343,7 @@ final class ProductPageViewController: UIViewController {
         productContentsLabel.text = viewModel.contents ?? "Состав отсутствует."
         shopURL = viewModel.productURL
         
-        productCompatibleIcon.isHidden = hideExcluded
+        productCompatibleIcon.isHidden = !isExcluded
         
         if let image = ProductCollectionViewController.imageCache.object(forKey: (viewModel.imageURL?.absoluteString ?? "") as NSString) as? UIImage {
             productImageView.image = image

@@ -50,7 +50,7 @@ class BarcodeScannerViewController: UIViewController {
     }
     
     private func setupRectangle() {
-        let barcodeRectView = BarcodeRectView()
+        let barcodeRectView = BarcodeScannerRectView()
         barcodeRectView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(barcodeRectView)
         barcodeRectView.pinCenterX(to: view.centerXAnchor)
@@ -75,7 +75,16 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
         guard let stringValue = metadataObject.stringValue else { return }
         
         code = stringValue
-        ParsingHelper.checkBarcode(code)
+        
+        let scannedProductVC = ScannedProductPageViewController()
+        
+        ParsingHelper.checkBarcode(code) { productViewModel in
+            DispatchQueue.main.async {
+                scannedProductVC.configure(with: productViewModel)
+                let navController = UINavigationController(rootViewController: scannedProductVC)
+                self.present(navController, animated: true)
+            }
+        }
         
         // Stop the capture session to prevent further processing
         captureSession.stopRunning()

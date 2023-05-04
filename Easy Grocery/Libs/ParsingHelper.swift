@@ -133,7 +133,21 @@ class ParsingHelper {
         }
     }
     
-    static func checkBarcode(_ barcode: String) -> Dictionary<String, String> {
+    static func shouldExcludeProductByItem(excludedItem: String, product: ProductViewModel) -> Bool {
+        let description = product.description ?? ""
+        let contents = product.contents ?? ""
+        let productType = product.productType ?? ""
+        let name = product.name
+        for text in [description, contents, productType, name] {
+            if text.lowercased().contains(excludedItem.lowercased()) {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    static func checkBarcode(_ barcode: String, completion: @escaping (ProductViewModel) -> Void) {
         var result = ["title": "", "description": "", "keywords": ""]
         let regexps = [
             "title": "(?<=<title>).*?(?=</title>)",
@@ -167,14 +181,17 @@ class ParsingHelper {
                             }
                         }
                     }
-                    dump(result)
-//                    print(htmlString)
+                    
+                    let title = result["title"]?.replacingOccurrences(of: " - " + "Штрих-код: " + barcode, with: "")
+                    var description = result["description"]?.components(separatedBy: ";")[0]
+                    description = description?.replacingOccurrences(of: "Штрих-код:" + barcode + " - ", with: "")
+                    let contents = result["keywords"]?.replacingOccurrences(of: "\"", with: "")
+                    
+                    completion(ProductViewModel(title ?? "", description, contents: contents))
                 }
             }
 
             task.resume()
         }
-        
-        return result
     }
 }

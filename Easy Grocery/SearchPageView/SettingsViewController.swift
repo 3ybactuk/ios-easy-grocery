@@ -194,7 +194,17 @@ final class SettingsViewController: UITableViewController {
                 return
             }
             // Do something with the text entered in the text field
-            ParsingHelper.checkBarcode(text)
+            let scannedProductVC = ScannedProductPageViewController()
+            
+            ParsingHelper.checkBarcode(text) { productViewModel in
+                DispatchQueue.main.async {
+                    scannedProductVC.configure(with: productViewModel)
+                    let navController = UINavigationController(rootViewController: scannedProductVC)
+                    self.present(navController, animated: true)
+                }
+            }
+            
+
         }))
         
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) { (action) in
