@@ -11,6 +11,7 @@ final class SettingsViewController: UITableViewController {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = true
+        self.hideKeyboardWhenTappedAround()
         setupUI()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }

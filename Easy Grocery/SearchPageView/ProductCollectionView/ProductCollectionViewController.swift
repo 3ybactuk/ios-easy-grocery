@@ -15,6 +15,7 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = false
+        self.hideKeyboardWhenTappedAround()
         
         setupUI()
     }

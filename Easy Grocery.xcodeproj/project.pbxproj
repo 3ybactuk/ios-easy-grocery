@@ -25,6 +25,7 @@
 		49BB0DC629FFC4E3001F7AAB /* ProductPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB0DC529FFC4E3001F7AAB /* ProductPageViewController.swift */; };
 		49BB0DCB2A0006A0001F7AAB /* TwoColumnTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB0DCA2A00069F001F7AAB /* TwoColumnTableCell.swift */; };
 		49BB0DD22A02BB18001F7AAB /* ScannedProductPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB0DD12A02BB18001F7AAB /* ScannedProductPageViewController.swift */; };
+		49BB0DD62A03F587001F7AAB /* HideKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB0DD52A03F587001F7AAB /* HideKeyboardExtension.swift */; };
 		49BE8D5A29FABFFD00B44498 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE8D5929FABFFD00B44498 /* ProductViewModel.swift */; };
 		49BE8D6029FAD5E300B44498 /* ProductCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE8D5F29FAD5E300B44498 /* ProductCollectionViewController.swift */; };
 		49BE8D6C29FAD7BB00B44498 /* vprok_base_small.csv in Resources */ = {isa = PBXBuildFile; fileRef = 49BE8D6A29FAD7BA00B44498 /* vprok_base_small.csv */; };
@@ -62,6 +63,7 @@
 		49BB0DC529FFC4E3001F7AAB /* ProductPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductPageViewController.swift; sourceTree = "<group>"; };
 		49BB0DCA2A00069F001F7AAB /* TwoColumnTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoColumnTableCell.swift; sourceTree = "<group>"; };
 		49BB0DD12A02BB18001F7AAB /* ScannedProductPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedProductPageViewController.swift; sourceTree = "<group>"; };
+		49BB0DD52A03F587001F7AAB /* HideKeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtension.swift; sourceTree = "<group>"; };
 		49BE8D5929FABFFD00B44498 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		49BE8D5F29FAD5E300B44498 /* ProductCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCollectionViewController.swift; sourceTree = "<group>"; };
 		49BE8D6A29FAD7BA00B44498 /* vprok_base_small.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vprok_base_small.csv; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				49C3378629F1951F00A6C681 /* TextFieldIndentExtension.swift */,
 				492467AD29F1DE6700BE40CC /* ButtonExtensions.swift */,
 				492467D929F7029A00BE40CC /* ParsingHelper.swift */,
+				49BB0DD52A03F587001F7AAB /* HideKeyboardExtension.swift */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				49C3378729F1951F00A6C681 /* TextFieldIndentExtension.swift in Sources */,
 				49C3378C29F1AA2500A6C681 /* PreferencesViewController.swift in Sources */,
 				49C3378129F14A5D00A6C681 /* LoginView.swift in Sources */,
+				49BB0DD62A03F587001F7AAB /* HideKeyboardExtension.swift in Sources */,
 				492467CA29F3F28500BE40CC /* CheckboxCell.swift in Sources */,
 				49BB0DD22A02BB18001F7AAB /* ScannedProductPageViewController.swift in Sources */,
 				49C3376729F149B800A6C681 /* LoginViewController.swift in Sources */,

@@ -23,6 +23,7 @@ final class PreferencesViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
+        self.hideKeyboardWhenTappedAround()
         setupUI()
 
         let isLoggedIn = UserDefaults.standard.bool(forKey: "is_authenticated")
@@ -328,8 +329,12 @@ extension PreferencesViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // called when 'return' key pressed. return NO to ignore.
         print("TextField should return method called")
-        addExcludedItem()
+        if (cellAddField.text?.count ?? 0 > 0) {
+            addExcludedItem()
+        }
+    
         cellAddField.text = ""
+        textField.resignFirstResponder()
         // may be useful: textField.resignFirstResponder()
         return true
     }

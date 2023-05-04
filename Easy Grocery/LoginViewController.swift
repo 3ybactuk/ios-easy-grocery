@@ -11,7 +11,7 @@ class LoginViewController: UIViewController {
         self.navigationController?.isToolbarHidden = true
         view.backgroundColor = .systemGray6
         self.loginView.viewControllerDelegate = self
-        
+        self.hideKeyboardWhenTappedAround()
         setupLoginViewSV()
     }
     

@@ -63,7 +63,7 @@ class ParsingHelper {
     static func getProductsCSV() -> [ProductViewModel] {
         var products = [ProductViewModel]()
         
-        guard let filepath = Bundle.main.path(forResource: "vprok_base_small", ofType: "csv") else {
+        guard let filepath = Bundle.main.path(forResource: "vprok_base", ofType: "csv") else {
             return products
         }
         
@@ -81,7 +81,9 @@ class ParsingHelper {
         // 0index, 1'Название', 2'О товаре', 3'Производитель', 4'Торговая марка', 5'Страна', 6'Вес', 7'Объем', 8'Состав', 9'Вид', 10'Энергетическая ценность', 11'Белки', 12'Жиры', 13'Углеводы', 14'Срок годности', 15'Стоимость', 16'IMG URL', 17'URL'
         for row in rows {
             let columns = row.components(separatedBy: "|")
-
+            if columns.count < 18 {
+                continue
+            }
             let productName = columns[1]
             let description = columns[2].count != 0 ? columns[2] : nil
             let manufacturer = columns[3].count != 0 ? columns[3] : nil
