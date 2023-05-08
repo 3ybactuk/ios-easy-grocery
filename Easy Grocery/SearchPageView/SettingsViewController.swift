@@ -48,6 +48,8 @@ final class SettingsViewController: UITableViewController {
         exitCell.textLabel?.textColor = .systemRed
         exitCell.backgroundColor = .white
         exitCell.accessoryType = .none
+        exitCell.selectionStyle = .gray
+        exitCell.isUserInteractionEnabled = true
         exitCell.addGestureRecognizer(tapGesture)
     }
     
@@ -154,6 +156,13 @@ final class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return ""
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == 1 {
+            return nil
+        }
+        return indexPath
     }
     
     func logOff() {

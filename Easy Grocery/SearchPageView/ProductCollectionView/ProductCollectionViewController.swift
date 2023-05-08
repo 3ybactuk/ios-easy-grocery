@@ -6,11 +6,13 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
     private var isLoading = false
     private var excludedViewModels = [ProductViewModel]()
     
-    private var currentPage = 0
+    private var currentPage = 1
     private var totalPages = 1
     
     var excludeSet = Set<String>()
+    let productsAll = ParsingHelper.getProductsCSV()
     
+    private let searchBar = UISearchBar()
     
     var hideExcludedEnabled = false
     
@@ -35,13 +37,25 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchProducts()
+        fetchProducts(searchString: searchBar.text)
     }
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
+        navigationItem.titleView = searchBar
+        configureSearchBar()
+        
         configureCollectionView()
-        fetchProducts()
+        fetchProducts(searchString: searchBar.text)
+    }
+    
+    private func configureSearchBar() {
+        searchBar.delegate = self
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(searchBar)
+        searchBar.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 6)
+        searchBar.pin(to: view, [.left, .right])
+        searchBar.setHeight(32)
     }
     
     private func configureCollectionView() {
@@ -62,10 +76,11 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
         
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.pin(to: view, [.top, .bottom, .left, .right])
+        collectionView.pinTop(to: searchBar.bottomAnchor, 6)
+        collectionView.pin(to: view, [.bottom, .left, .right])
     }
     
-    func fetchProducts() {
+    func fetchProducts(searchString: String?) {
         productViewModels = []
         collectionView.isScrollEnabled = false
         self.isLoading = true
@@ -74,11 +89,24 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
         self.excludeSet = Set(ParsingHelper.getExcludePreferences())
         
         let pageSize = 16
-        let startIndex = max(0, currentPage * pageSize - pageSize)
-//        let startIndex = 0
-        let endIndex = currentPage * pageSize + pageSize
-        let products = ParsingHelper.getProductsCSV()
-        totalPages = products.count / pageSize
+//        let startIndex = max(0, currentPage * pageSize - pageSize)
+        let startIndex = 0
+        var endIndex = currentPage * pageSize
+        
+        totalPages = productsAll.count / pageSize
+        
+        var products = productsAll
+        
+        
+        if let searchString = searchString, !searchString.isEmpty {
+            products = products.filter { product in
+                let name = product.name.lowercased()
+                let desc = product.description?.lowercased() ?? ""
+                return name.contains(searchString.lowercased()) || desc.contains(searchString.lowercased())
+            }
+        }
+
+        endIndex = min(products.count, endIndex)
         
         for product in products[startIndex..<endIndex] {
             var shouldAppend = true
@@ -95,26 +123,13 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
             }
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.collectionView.reloadData()
+            self.hideSkeleton()
             self.collectionView.isScrollEnabled = true
             self.isLoading = false
-            self.hideSkeleton()
             
-            let currentItemCount = self.productViewModels.count
-            let newItems = products[currentItemCount..<min(currentItemCount+pageSize, products.count)]
-            let newIndexPaths = (currentItemCount..<currentItemCount+newItems.count).map { IndexPath(item: $0, section: 0) }
-            
-//            self.productViewModels.append(contentsOf: newItems)
-//            self.excludedViewModels.append(contentsOf: excludedProducts)
-            
-            if self.productViewModels.count > pageSize {
-                // Scroll to the middle of the new page
-                let middleIndex = currentItemCount + (pageSize) 
-                let middleIndexPath = IndexPath(item: middleIndex, section: 0)
-                self.collectionView.scrollToItem(at: middleIndexPath, at: .centeredVertically, animated: false)
-            }
-            
-            self.collectionView.reloadData()
         }
     }
 }
@@ -158,20 +173,39 @@ extension ProductCollectionViewController: UICollectionViewDelegateFlowLayout {
         let contentHeight = collectionView.contentSize.height
         let offsetY = scrollView.contentOffset.y
         let visibleHeight = scrollView.frame.height
+        if (isLoading) { return }
         
-        if 0.7 * offsetY < 0 && currentPage > 0 {
-            // Load previous page
-            currentPage -= 1
-            fetchProducts()
-        } else if 1.3 * offsetY > contentHeight - visibleHeight && currentPage < totalPages - 1 {
+        if 1.3 * offsetY > contentHeight - visibleHeight && currentPage < totalPages - 1 {
             // Load next page
             currentPage += 1
-            fetchProducts()
+            fetchProducts(searchString: searchBar.text)
         }
-        
-//        if 1.3 * offsetY > contentHeight - visibleHeight {
-//            currentPage += 1
-//            fetchProducts()
-//        }
+    }
+}
+
+extension ProductCollectionViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchString = searchBar.text else { return }
+        currentPage = 0
+//        fetchProducts(searchString: searchString)
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("Cancel button clicked")
+        searchBar.text = ""
+        currentPage = 0
+        searchBar.resignFirstResponder()
+        fetchProducts(searchString: nil)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+            searchBarCancelButtonClicked(searchBar)
+            return
+        }
+        currentPage = 0
+
+        fetchProducts(searchString: searchText)
     }
 }

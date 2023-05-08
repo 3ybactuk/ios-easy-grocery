@@ -253,6 +253,7 @@ final class ProductPageViewController: UIViewController {
         KCALTable.register(TwoColumnTableCell.self, forCellReuseIdentifier: "cell")
         KCALTable.isScrollEnabled = false
         KCALTable.sizeToFit()
+        KCALTable.isUserInteractionEnabled = false
         let tableHeader = UILabel()
         tableHeader.font = .systemFont(ofSize: 16, weight: .bold)
         tableHeader.text = "Пищевая ценность на 100 г"
@@ -419,5 +420,10 @@ extension ProductPageViewController: UITableViewDelegate {
         }
 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        // Disable selection for all rows
+        return nil
     }
 }
