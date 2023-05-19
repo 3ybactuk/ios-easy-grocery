@@ -38,7 +38,6 @@
 		49C3376F29F149BB00A6C681 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49C3376D29F149BB00A6C681 /* LaunchScreen.storyboard */; };
 		49C3377929F149FB00A6C681 /* PinLib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3377829F149FB00A6C681 /* PinLib.swift */; };
 		49C3377D29F14A2300A6C681 /* LayerShadowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3377C29F14A2300A6C681 /* LayerShadowExtension.swift */; };
-		49C3378129F14A5D00A6C681 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3378029F14A5D00A6C681 /* LoginView.swift */; };
 		49C3378429F194D200A6C681 /* ButtonAnimationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3378329F194D200A6C681 /* ButtonAnimationExtension.swift */; };
 		49C3378729F1951F00A6C681 /* TextFieldIndentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3378629F1951F00A6C681 /* TextFieldIndentExtension.swift */; };
 		49C3378C29F1AA2500A6C681 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C3378B29F1AA2400A6C681 /* PreferencesViewController.swift */; };
@@ -78,7 +77,6 @@
 		49C3377029F149BB00A6C681 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49C3377829F149FB00A6C681 /* PinLib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinLib.swift; sourceTree = "<group>"; };
 		49C3377C29F14A2300A6C681 /* LayerShadowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerShadowExtension.swift; sourceTree = "<group>"; };
-		49C3378029F14A5D00A6C681 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		49C3378329F194D200A6C681 /* ButtonAnimationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAnimationExtension.swift; sourceTree = "<group>"; };
 		49C3378629F1951F00A6C681 /* TextFieldIndentExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldIndentExtension.swift; sourceTree = "<group>"; };
 		49C3378B29F1AA2400A6C681 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -197,7 +195,6 @@
 				492467DE29F7AA7500BE40CC /* SearchPageView */,
 				492467C129F3F1FB00BE40CC /* CheckboxTableView */,
 				49C3378E29F1C91E00A6C681 /* PreferencesViewController */,
-				49C3377F29F14A4C00A6C681 /* LoginView */,
 				49C3377729F149F100A6C681 /* Libs */,
 				49C3376229F149B800A6C681 /* AppDelegate.swift */,
 				49C3376429F149B800A6C681 /* SceneDelegate.swift */,
@@ -223,14 +220,6 @@
 				49BB0DD52A03F587001F7AAB /* HideKeyboardExtension.swift */,
 			);
 			path = Libs;
-			sourceTree = "<group>";
-		};
-		49C3377F29F14A4C00A6C681 /* LoginView */ = {
-			isa = PBXGroup;
-			children = (
-				49C3378029F14A5D00A6C681 /* LoginView.swift */,
-			);
-			path = LoginView;
 			sourceTree = "<group>";
 		};
 		49C3378E29F1C91E00A6C681 /* PreferencesViewController */ = {
@@ -321,7 +310,6 @@
 				49C3378429F194D200A6C681 /* ButtonAnimationExtension.swift in Sources */,
 				49C3378729F1951F00A6C681 /* TextFieldIndentExtension.swift in Sources */,
 				49C3378C29F1AA2500A6C681 /* PreferencesViewController.swift in Sources */,
-				49C3378129F14A5D00A6C681 /* LoginView.swift in Sources */,
 				49BB0DD62A03F587001F7AAB /* HideKeyboardExtension.swift in Sources */,
 				492467CA29F3F28500BE40CC /* CheckboxCell.swift in Sources */,
 				49BB0DD22A02BB18001F7AAB /* ScannedProductPageViewController.swift in Sources */,

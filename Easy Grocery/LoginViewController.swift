@@ -1,16 +1,17 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-    let loginView = LoginView()
     let nameLabel = UILabel()
     let descLabel = UILabel()
+    
+    let continueButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.isToolbarHidden = true
         view.backgroundColor = .systemGray6
-        self.loginView.viewControllerDelegate = self
+        
         self.hideKeyboardWhenTappedAround()
         setupLoginViewSV()
     }
@@ -26,22 +27,29 @@ class LoginViewController: UIViewController {
     }
     
     private func setupLoginViewSV() {
-        loginView.layer.applyShadow(2.0)
-        view.addSubview(loginView)
-
-        loginView.translatesAutoresizingMaskIntoConstraints = false
-        loginView.pin(to: view, [.left, .right], 24)
-        loginView.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, 8)
+        continueButton.setTitle("Продолжить", for: .normal)
+        continueButton.addTarget(self, action: #selector(continueButtonPressed), for: .touchUpInside)
+        continueButton.setTitleColor(.white, for: .normal)
+        continueButton.backgroundColor = .systemBlue
+        continueButton.layer.cornerRadius = 8
+        continueButton.titleLabel?.font = .systemFont(ofSize: 16.0, weight: .medium)
+        continueButton.setHeight(48)
+//        continueButton.setWidth(48)
+        continueButton.startAnimatingPressActions()
+        continueButton.layer.applyShadow(2.0)
+        view.addSubview(continueButton)
+        continueButton.pin(to: view, [.left, .right], 48)
+        continueButton.pinBottom(to: view.safeAreaLayoutGuide.bottomAnchor, 64)
         
         nameLabel.text = "Easy Grocery"
         nameLabel.textAlignment = .center
-        nameLabel.font = UIFont(name: "Happy Monkey", size: 48)
+        nameLabel.font = UIFont(name: "Happy Monkey", size: 52)
         nameLabel.textColor = UIColor.black
-        nameLabel.font = nameLabel.font.withSize(48)
+        nameLabel.font = nameLabel.font.withSize(52)
     
         descLabel.text = "помощник для людей с ограничениями питания"
         descLabel.textAlignment = .center
-        descLabel.font = UIFont(name: "Fira Sans", size: 8)
+        descLabel.font = UIFont(name: "Fira Sans", size: 20)
         descLabel.textColor = UIColor.black
         descLabel.lineBreakMode = .byWordWrapping
         descLabel.numberOfLines = 2
@@ -49,12 +57,17 @@ class LoginViewController: UIViewController {
         view.addSubview(nameLabel)
         view.addSubview(descLabel)
         
-        nameLabel.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 128)
+        nameLabel.pinTop(to: view.safeAreaLayoutGuide.topAnchor, 256)
         nameLabel.pinCenterX(to: view)
         
         descLabel.pinTop(to: nameLabel.bottomAnchor)
         descLabel.pinCenterX(to: view)
         descLabel.setWidth(256)
+    }
+    
+    @objc
+    private func continueButtonPressed() {
+        loggedIn()
     }
 }
 
@@ -63,16 +76,14 @@ extension LoginViewController: PreferencesDelegate {
         print("Logged in invoked")
         let preferencesViewController = PreferencesViewController()
         preferencesViewController.viewControllerDelegate = self
-//        self.present(preferencesViewController, animated: true, completion: nil)
-//        navigationController?.isNavigationBarHidden = false
-//        navigationController?.popViewController(animated: false)
+
         navigationController?.pushViewController(preferencesViewController, animated: true)
     }
     
     func switchToSearch() {
         print("Search invoked")
         let searchViewController = SearchPageViewController()
-//        navigationController?.popViewController(animated: false)
+
         navigationController?.pushViewController(searchViewController, animated: true)
     }
 }

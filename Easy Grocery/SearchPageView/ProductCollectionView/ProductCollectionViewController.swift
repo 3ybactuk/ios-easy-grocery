@@ -105,7 +105,6 @@ class ProductCollectionViewController: UIViewController, SkeletonDisplayable {
                 return name.contains(searchString.lowercased()) || desc.contains(searchString.lowercased())
             }
         }
-
         endIndex = min(products.count, endIndex)
         
         for product in products[startIndex..<endIndex] {
@@ -185,8 +184,9 @@ extension ProductCollectionViewController: UICollectionViewDelegateFlowLayout {
 
 extension ProductCollectionViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchString = searchBar.text else { return }
-        currentPage = 0
+//        guard let searchString = searchBar.text else { return }
+        currentPage = 1
+        
 //        fetchProducts(searchString: searchString)
         searchBar.resignFirstResponder()
     }
@@ -194,7 +194,7 @@ extension ProductCollectionViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         print("Cancel button clicked")
         searchBar.text = ""
-        currentPage = 0
+        currentPage = 1
         searchBar.resignFirstResponder()
         fetchProducts(searchString: nil)
     }
@@ -204,7 +204,7 @@ extension ProductCollectionViewController: UISearchBarDelegate {
             searchBarCancelButtonClicked(searchBar)
             return
         }
-        currentPage = 0
+        currentPage = 1
 
         fetchProducts(searchString: searchText)
     }
